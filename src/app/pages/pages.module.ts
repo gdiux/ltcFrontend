@@ -15,6 +15,9 @@ import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { BreadcrumbsComponent } from '../shared/breadcrumbs/breadcrumbs.component';
 import { SidebarComponent } from '../shared/sidebar/sidebar.component';
+import { PreventivosComponent } from './preventivos/preventivos.component';
+import { CorrectivosComponent } from './correctivos/correctivos.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 
@@ -28,7 +31,10 @@ import { SidebarComponent } from '../shared/sidebar/sidebar.component';
     HeaderComponent,
     FooterComponent,
     BreadcrumbsComponent,
-    SidebarComponent
+    SidebarComponent,
+    PreventivosComponent,
+    CorrectivosComponent,
+    PerfilComponent
   ],
   exports:[
     DashboardComponent,
@@ -36,6 +42,9 @@ import { SidebarComponent } from '../shared/sidebar/sidebar.component';
     ClientesComponent,
     UsuariosComponent,
     PagesComponent,
+    PreventivosComponent,
+    CorrectivosComponent,
+    PerfilComponent
   ],
   imports: [
     CommonModule,

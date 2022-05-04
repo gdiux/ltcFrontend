@@ -3,25 +3,21 @@ import { RouterModule, Routes } from '@angular/router';
 
 // MODULES
 import { PagesRoutingModule } from './pages/pages.routing';
+import { LoginRoutingModule } from './auth/auth.routing';
 
 // COMPONENTS
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
-import { PagesComponent } from './pages/pages.component';
-import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
-
-  { path: '', component: PagesComponent },
-
-  { path: 'login', component: LoginComponent, data:{ title: 'Login' } },
-
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', component: NopagefoundComponent }  
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    PagesRoutingModule
+    PagesRoutingModule,
+    LoginRoutingModule
   ],
   exports: [RouterModule]
 })

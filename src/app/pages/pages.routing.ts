@@ -1,6 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+// GUARDS
+import { AuthGuard } from '../guards/auth.guard';
+
 // COMPONENTS
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ClientesComponent } from './clientes/clientes.component';
@@ -11,6 +14,7 @@ import { CorrectivosComponent } from './correctivos/correctivos.component';
 import { PreventivosComponent } from './preventivos/preventivos.component';
 import { PerfilComponent } from './perfil/perfil.component';
 
+
 // COMPONENTS
 
 const routes: Routes = [
@@ -18,6 +22,7 @@ const routes: Routes = [
     { 
         path: 'dashboard',
         component: PagesComponent,
+        canActivate: [AuthGuard],
         children:
         [
           { path: '', component: DashboardComponent, data:{ title: 'Dashboard' } },

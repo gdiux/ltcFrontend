@@ -139,8 +139,7 @@ export class ClientesComponent implements OnInit {
           this.clients = resultados;
           this.resultados = resultados.length;
 
-        });
-    
+        });   
 
   }
 

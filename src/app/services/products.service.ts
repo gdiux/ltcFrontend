@@ -1,0 +1,66 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { catchError, map, tap } from 'rxjs/operators'
+import { Observable, of } from 'rxjs';
+
+// MODELS
+import { Product } from '../models/products.model';
+
+// INTERFACES
+import { LoadProducts } from '../interfaces/load-products.interface';
+
+// ENVIRONMENT
+import { environment } from '../../environments/environment';
+
+const base_url = environment.base_url;
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductsService {
+
+  constructor(  private http: HttpClient) { }
+
+  /** ================================================================
+   *   GET TOKEN
+  ==================================================================== */
+  get token():string {
+    return localStorage.getItem('token') || '';
+  }
+
+  /** ================================================================
+   *   GET HEADERS
+  ==================================================================== */
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
+  }
+
+  /** ================================================================
+   *   LOAD PRODUCTS
+  ==================================================================== */
+  loadProducts(desde: number, limite: number){
+    return this.http.get<LoadProducts>( `${base_url}/products?desde=${desde}&limite=${limite}`, this.headers );
+  }
+
+  /** ================================================================
+   *   CREATE PRODUCTS
+  ==================================================================== */
+  createProduct( formData: any ){
+    return this.http.post<{ok: boolean, product: Product}>(`${base_url}/products`, formData, this.headers);
+  }
+
+  /** ================================================================
+   *   UPDATE PRODUCTS
+  ==================================================================== */
+  updateProduct( formData:any, id: string ){
+    return this.http.put<{ok: boolean, product: Product}>(`${base_url}/products/${id}`, formData, this.headers);
+  }
+
+
+  // FIN DE LA CLASE
+}

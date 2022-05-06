@@ -1,10 +1,232 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
+
             <div class="card-body">
-                <p>productos works!</p>
-                This is some text within a card block.
+
+                <div class="d-flex justify-content-between flex-wrap mt-1">
+
+                    <div>
+                        <h4 class="card-title">Lista de Productos</h4>
+                        <h6 class="card-subtitle">Total: {{ total | number }}</h6>
+
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-product">Agregar Producto</button>
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex justify-content-between flex-wrap mt-1">
+                    <div class="my-2">
+                        <input type="text" id="demo-input-search2" placeholder="Buscar Productos" (keyup)="search(buscador.value)" class="form-control m-0" #buscador>
+                        <small *ngIf="resultados > 0" class="text-muted animated fadeIn">Resultados: {{resultados}}</small>
+                    </div>
+
+                    <div class="my-2">
+
+                        <label for="mostrar" class="me-2">Mostrar: </label>
+                        <select name="" id="" [value]="limite" #mostrar (change)="limiteChange(mostrar.value)">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="250">250</option>
+                            <option value="500">500</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Serial</th>
+                                <th>Modelo</th>
+                                <th>Cliente</th>
+                                <th>Condiciones</th>
+                                <th>MP</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngIf="products.length == 0">
+                                <td colspan="7">
+                                    <h3 class="mb-0 text-center"> Aun no existen registros de productos... </h3>
+                                </td>
+                            </tr>
+
+                            <tr *ngFor="let product of products">
+
+                                <td> {{ product.code }} </td>
+                                <td> {{ product.serial }} </td>
+                                <td> {{ product.model }} </td>
+                                <td> {{ product.client?.name }} </td>
+                                <td>
+                                    <span class="label label-inverse"> {{ product.estado }} </span>
+                                </td>
+                                <td> {{ product?.next | date: 'medium' }} </td>
+                                <td>
+                                    <span *ngIf="product.status" class="label label-success"> Activo </span>
+                                    <span *ngIf="!product.status" class="label label-danger"> Desactivado </span>
+                                </td>
+                                <td>
+                                    <button (click)="selectProduct(product)" type="button" class="btn btn-sm btn-icon btn-pure btn-outline text-primary delete-row-btn" data-toggle="modal" data-target="#edit-client">
+                                        <i class="ti-pencil" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Desactivar">
+                                        <i class="ti-close" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <td colspan="7">
+
+                                    <div class="btn-group" role="group" aria-label="First group">
+                                        <button [disabled]="desde === 0" (click)="cambiarPagina(-10)" type="button" class="btn btn-dark text-white">Atras</button>
+                                        <button [disabled]="( desde + limite ) >= total" (click)="cambiarPagina(10)" type="button" class="btn btn-dark text-white">Siguiente</button>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- ========================================================= 
+MODAL AGREGAR PRODUCT
+======================================================== -->
+<div id="add-product" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" #modalNewUser>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Nuevo Producto</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal form-material" autocomplete="off" [formGroup]="newProductForm" (ngSubmit)="createProduct()">
+
+                    <div class="form-group has-danger">
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="code" type="text" class="form-control" placeholder="Codigo **">
+                            <div *ngIf="validateNewForm('code')" class="form-control-feedback">
+                                <small> Los nombres son obligatorios </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="serial" type="text" class="form-control" placeholder="Serial **">
+                            <div *ngIf="validateNewForm('serial')" class="form-control-feedback">
+                                <small> El telefono es obligatorio </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="brand" type="text" class="form-control" placeholder="Marca">
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="model" type="text" class="form-control" placeholder="Modelo">
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="year" type="text" class="form-control" placeholder="Año">
+                        </div>
+
+                        <small class="mb-0 text-muted text-break"> <span class="fw-bold">NOTA:</span> Los campos de texto que tengan ** son obligatorios.</small>
+
+                    </div>
+
+                    <button type="submit" [disabled]="savingNew" class="btn btn-info waves-effect btn-block">Guardar</button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================= 
+MODAL EDITAR CLIENTE
+======================================================== -->
+<!-- <div id="edit-client" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" #modalNewUser>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Editar Cliente</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <form class="form-horizontal form-material" autocomplete="off" [formGroup]="editClientForm" (ngSubmit)="editClient()">
+
+                    <div class="form-group has-danger">
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="name" type="text" class="form-control" placeholder="Nombres **">
+                            <div *ngIf="validateEditForm('name')" class="form-control-feedback">
+                                <small> Los nombres son obligatorios </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="phone" type="text" class="form-control" placeholder="Telefono **">
+                            <div *ngIf="validateEditForm('phone')" class="form-control-feedback">
+                                <small> El telefono es obligatorio </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="cedula" type="text" class="form-control" placeholder="Cedula">
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="email" type="email" class="form-control" placeholder="Email">
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="address" type="text" class="form-control" placeholder="Dirección">
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="city" type="text" class="form-control" placeholder="Ciudad">
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="department" type="text" class="form-control" placeholder="Departamento">
+                        </div>
+
+                        <small class="mb-0 text-muted text-break"> <span class="fw-bold">NOTA:</span> Los campos de texto que tengan ** son obligatorios.</small>
+
+                    </div>
+
+                    <button type="submit" [disabled]="savingNew" class="btn btn-info waves-effect btn-block">Guardar</button>
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div> -->

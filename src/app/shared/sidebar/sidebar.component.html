@@ -10,8 +10,8 @@
                 <li class="user-profile">
 
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <img src="./assets/images/users/profile.png" alt="user" />
-                        <span class="hide-menu">Steave Jobs </span>
+                        <img [src]="user.getImage" alt="user" />
+                        <span class="hide-menu"> {{ user.name }} </span>
                     </a>
 
                     <ul aria-expanded="false" class="collapse">
@@ -44,21 +44,14 @@
                     </ul>
                 </li>
 
-                <li class="nav-small-cap">Mantenimientos</li>
-
                 <li>
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-file"></i><span class="hide-menu">Preventivos</span></a>
+                        <i class="mdi mdi-file"></i><span class="hide-menu">Mantenimientos</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a [routerLink]="['/dashboard/preventivos']">Lista de preventivos</a></li>
+                        <li><a [routerLink]="['/dashboard/preventivos']">Preventivos</a></li>
                     </ul>
-                </li>
-
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-map-marker"></i><span class="hide-menu">Correctivos</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a [routerLink]="['/dashboard/correctivos']">Lista de correctivos</a></li>
+                        <li><a [routerLink]="['/dashboard/correctivos']">Correctivos</a></li>
                     </ul>
                 </li>
 

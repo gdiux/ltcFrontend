@@ -11,6 +11,7 @@ import { User } from '../models/users.model';
 
 // INTERFACE
 import { LoginForm } from '../interfaces/login-form.interface';
+import { LoadUsers } from '../interfaces/load-users.interface';
 
 // ENVIRONMENT
 import { environment } from '../../environments/environment';
@@ -49,7 +50,7 @@ export class UsersService {
   /** ================================================================
    *   GET ROLES
   ==================================================================== */
-  get role(): 'ADMIN' | 'STAFF' {
+  get role(): 'ADMIN' | 'STAFF' | 'TECH' {
     return this.user.role;
   }
 
@@ -90,9 +91,9 @@ export class UsersService {
     }).pipe(
       tap( (resp: any) => {
         
-        const { usuario, name, role, img, uid, status} = resp.usuario;
+        const { usuario, role, name, status, address, img, valid, fecha, uid} = resp.usuario;
 
-        this.user = new User( usuario, name, '', role, img || 'no-image', uid, status);        
+        this.user = new User( usuario, role, name, '', status, address || '', img || 'no-image', valid, fecha, uid);        
 
         localStorage.setItem('token', resp.token);
 
@@ -102,6 +103,23 @@ export class UsersService {
     );
 
   }
+
+  /** ================================================================
+   *  LOAD USERS
+  ==================================================================== */
+  loadUsers(){
+
+    return this.http.get<LoadUsers>( `${base_url}/users`, this.headers );
+
+  }
+
+  /** ================================================================
+   *  CREATE USER
+  ==================================================================== */
+  createUser( formaData: any ){
+    return this.http.post<{user: User, ok: boolean}>(`${base_url}/users`, formaData, this.headers);
+  }
+
 
 
 

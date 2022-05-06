@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // MODULES
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // COMPONENTS
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -10,7 +11,6 @@ import { ProductosComponent } from './productos/productos.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PagesComponent } from './pages.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { BreadcrumbsComponent } from '../shared/breadcrumbs/breadcrumbs.component';
@@ -18,8 +18,7 @@ import { SidebarComponent } from '../shared/sidebar/sidebar.component';
 import { PreventivosComponent } from './preventivos/preventivos.component';
 import { CorrectivosComponent } from './correctivos/correctivos.component';
 import { PerfilComponent } from './perfil/perfil.component';
-
-
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +50,7 @@ import { PerfilComponent } from './perfil/perfil.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    PipesModule
     
   ]
 })

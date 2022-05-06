@@ -55,7 +55,7 @@
                         <tbody>
 
                             <tr *ngIf="products.length == 0">
-                                <td colspan="7">
+                                <td colspan="8">
                                     <h3 class="mb-0 text-center"> Aun no existen registros de productos... </h3>
                                 </td>
                             </tr>
@@ -88,7 +88,7 @@
                         <tfoot>
                             <tr>
 
-                                <td colspan="7">
+                                <td colspan="8">
 
                                     <div class="btn-group" role="group" aria-label="First group">
                                         <button [disabled]="desde === 0" (click)="cambiarPagina(-10)" type="button" class="btn btn-dark text-white">Atras</button>
@@ -148,6 +148,18 @@ MODAL AGREGAR PRODUCT
                             <input formControlName="year" type="text" class="form-control" placeholder="Año">
                         </div>
 
+                        <div class="col-md-12 m-b-20">
+                            <select formControlName="estado" class="form-control" #role>
+                                <option value="none" selected>Seleccionar</option>
+                                <option value="Disponible" >Disponible</option>
+                                <option value="Mantenimiento" >Mantenimiento</option>
+                                <option value="Instalada" >Instalada</option>
+                            </select>
+                            <div *ngIf=" newProductSubmitted && role.value === 'none' " class="form-control-feedback">
+                                <small> Selecciona una condicion </small>
+                            </div>
+                        </div>
+
                         <small class="mb-0 text-muted text-break"> <span class="fw-bold">NOTA:</span> Los campos de texto que tengan ** son obligatorios.</small>
 
                     </div>
@@ -164,7 +176,7 @@ MODAL AGREGAR PRODUCT
 </div>
 
 <!-- ========================================================= 
-MODAL EDITAR CLIENTE
+MODAL EDITAR PRODUCT
 ======================================================== -->
 <!-- <div id="edit-client" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" #modalNewUser>
     <div class="modal-dialog">

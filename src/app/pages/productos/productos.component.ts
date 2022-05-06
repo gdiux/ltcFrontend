@@ -75,7 +75,8 @@ export class ProductosComponent implements OnInit {
     serial: ['', [Validators.required]],
     brand: [''],
     model: [''],
-    year: ['']
+    year: [''],
+    estado: ['none']
   });
 
   createProduct(){
@@ -94,7 +95,9 @@ export class ProductosComponent implements OnInit {
           this.products.push(product);
           this.total ++;
           this.newProductSubmitted = false;
-          this.newProductForm.reset();
+          this.newProductForm.reset({
+            estado: ['none']
+          });
           this.savingNew = false;
 
           Swal.fire('Estupendo', 'El cliente se ha creado exitosamente!', 'success');

@@ -9,6 +9,8 @@ import { SearchService } from '../../services/search.service';
 
 // MODELS
 import { Product } from '../../models/products.model';
+import { Client } from '../../models/clients.model';
+
 
 @Component({
   selector: 'app-productos',
@@ -23,13 +25,60 @@ export class ProductosComponent implements OnInit {
                 private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.loadProducts();    
+  }
 
-    this.loadProducts();
+  /** ======================================================================
+   * LOAD CLIENTS
+  ====================================================================== */
+  public clients: Client[] = [];
+  public resultadoC: number = 0;
+  public sinResultadoC: boolean = false;
+  searchClients(termino: string){
+    
+    this.sinResultadoC = false;
+    if (termino.length === 0) {
+      this.clients = [];
+      this.resultadoC = 0;
+      return;
+    }   
+
+    this.searchService.search('clients', termino, '')
+        .subscribe( ({resultados}) => {
+
+          this.clients = resultados;
+          this.resultadoC = resultados.length;
+          
+          if (this.resultadoC === 0) {
+            this.sinResultadoC = true;
+          }
+
+        }, (err) => { Swal.fire('Error', err.error.msg, 'error'); });
 
   }
 
   /** ======================================================================
-   * LOAD USERS
+   * ASSIGN CLIENTS
+  ====================================================================== */
+  public addClient!: Client;
+  public productC!: Product;
+  assignClient(){
+
+    this.productC.client = this.addClient.cid;
+
+    this.productsService.updateProduct(this.productC, this.productC.pid!)
+        .subscribe( ({product}) => {
+
+          this.loadProducts();
+          Swal.fire('Estupendo', 'Hemos asignado el cliente correctamente!', 'success');
+
+        }, (err) => { Swal.fire('Error', err.error.msg, 'error') });
+    
+
+  }
+
+  /** ======================================================================
+   * LOAD PRODUCTS
   ====================================================================== */
   public desde:number = 0;
   public limite:number = 50;
@@ -53,13 +102,13 @@ export class ProductosComponent implements OnInit {
           }
           // COMPROBAR SI EXISTEN RESULTADOS
 
+          console.log(products);
+          
+
           this.cargando = false;
           this.total = total;
           this.products = products;
           this.productsTemp = products;
-
-          console.log(products);
-          
 
         });
 
@@ -104,9 +153,7 @@ export class ProductosComponent implements OnInit {
 
         }, (err) => { 
           Swal.fire('Error', err.error.msg, 'error');
-          this.savingNew = false;
-          console.log(err);
-          
+          this.savingNew = false;          
         });
 
   }
@@ -187,7 +234,72 @@ export class ProductosComponent implements OnInit {
   ====================================================================== */  
   selectProduct(product: Product){
 
-    // this.editProductForm.reset();
+    this.editProductForm.reset({
+      code: product.code,
+      serial: product.serial,
+      brand: product.brand,
+      model: product.model,
+      year: product.year,
+      estado: product.estado,
+      pid: product.pid
+    });
+
+  }
+
+  /** ======================================================================
+   * EDIT
+  ====================================================================== */
+  public savingEdit: boolean = false;
+  public editProductSubmitted: boolean = false;
+  public editProductForm = this.fb.group({
+    code: ['', [Validators.required]],
+    serial: ['', [Validators.required]],
+    brand: [''],
+    model: [''],
+    year: [''],
+    estado: ['none'],
+    pid: ['']
+  });
+
+  editProduct(){
+
+    this.savingEdit = true;
+    this.editProductSubmitted = true;
+
+    if (this.editProductForm.invalid) {
+      this.savingEdit = false;
+      return;
+    }
+
+    this.productsService.updateProduct( this.editProductForm.value, this.editProductForm.value.pid )
+        .subscribe( ({product}) => {
+
+          this.products.push(product);
+          this.total ++;
+          this.editProductSubmitted = false;
+          this.selectProduct(product);
+          this.loadProducts();
+          this.savingEdit = false;
+
+          Swal.fire('Estupendo', 'El productos se ha editado exitosamente!', 'success');
+
+        }, (err) => {           
+          Swal.fire('Error', err.error.msg, 'error');
+          this.savingEdit = false;
+        });
+
+  }
+
+  /** ======================================================================
+   * VALIDATE FORM EDIT
+  ====================================================================== */
+  validateEditForm( campo:string ): boolean{
+
+    if ( this.editProductForm.get(campo)?.invalid && this.editProductSubmitted ) {      
+      return true;
+    }else{
+      return false;
+    }
 
   }
 

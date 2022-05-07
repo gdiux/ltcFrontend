@@ -234,6 +234,8 @@ export class ClientesComponent implements OnInit {
           Swal.fire('Estupendo', 'El cliente se ha creado exitosamente!', 'success');
 
         }, (err) => { 
+          console.log(err);
+          
           Swal.fire('Error', err.error.msg, 'error');
           this.savingEdit = false;
         });

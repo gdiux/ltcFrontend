@@ -59,7 +59,7 @@ export class ClientesComponent implements OnInit {
           this.clients = clients;
           this.clientsTemp = clients;
 
-        });
+        }, (err) => { Swal.fire('Error', err.error.msg, 'error'); });
 
   }
 

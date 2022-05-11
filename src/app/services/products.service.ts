@@ -60,6 +60,17 @@ export class ProductsService {
   updateProduct( formData:any, id: string ){
     return this.http.put<{ok: boolean, product: Product}>(`${base_url}/products/${id}`, formData, this.headers);
   }
+  /** ================================================================
+   *   UPDATE CLIENT PRODUCTS product
+client
+change
+  ==================================================================== */
+  updateClientProduct(
+    product: string,
+    body: any
+  ){
+    return this.http.put<{ ok: boolean, product: Product }>(`${base_url}/products/${product}/change`, body, this.headers);
+  }
 
 
   // FIN DE LA CLASE

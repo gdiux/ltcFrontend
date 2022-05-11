@@ -19,6 +19,9 @@ import { PreventivosComponent } from './preventivos/preventivos.component';
 import { CorrectivosComponent } from './correctivos/correctivos.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { CreatepreventivesComponent } from './components/createpreventives/createpreventives.component';
+import { CreatecorrectivesComponent } from './components/createcorrectives/createcorrectives.component';
+import { AssignClientComponent } from './components/assign-client/assign-client.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { PipesModule } from '../pipes/pipes.module';
     SidebarComponent,
     PreventivosComponent,
     CorrectivosComponent,
-    PerfilComponent
+    PerfilComponent,
+    CreatepreventivesComponent,
+    CreatecorrectivesComponent,
+    AssignClientComponent
   ],
   exports:[
     DashboardComponent,

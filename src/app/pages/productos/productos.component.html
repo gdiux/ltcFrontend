@@ -67,15 +67,22 @@
                                 <td> {{ product.model }} </td>
                                 <!-- mdi-account-plus -->
                                 <td class="text-center">
-                                    <span *ngIf="product.client?.name">
-                                        {{ product.client?.name }} 
-                                    </span>
-                                    <button (click)="productC = product" type="button" class="btn btn-sm btn-icon btn-pure btn-info delete-row-btn" data-toggle="modal" data-target="#client-product">
+
+
+                                    <button *ngIf="product.client?.name" class=" col-md-2 col-sm-6 text-truncate btn btn-block btn-outline-success btn-sm btn-rounded text-break" (click)="productC = product" type="button" data-toggle="modal" data-target="#client-product" style="max-width: 6rem;">
+                                        <span data-toggle="tooltip" [title]="product.client.name">
+                                            {{ product.client?.name }}
+                                        </span>
+                                    </button>
+
+                                    <button *ngIf="!product.client?.name && product.estado != 'Instalada'" (click)="productC = product" type="button" class="btn btn-sm btn-icon btn-pure btn-info delete-row-btn text-break" data-toggle="modal" data-target="#client-product">
                                         <i class="mdi mdi-account-plus" aria-hidden="true"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <span class="label label-inverse"> {{ product.estado }} </span>
+                                    <span *ngIf="product.estado === 'Instalada' " class="label label-inverse"> {{ product.estado }} </span>
+                                    <span *ngIf="product.estado === 'Disponible' " class="label label-success"> {{ product.estado }} </span>
+                                    <span *ngIf="product.estado === 'Mantenimiento' " class="label label-warning"> {{ product.estado }} </span>
                                 </td>
                                 <td> {{ product?.next | date: 'medium' }} </td>
                                 <td>
@@ -191,7 +198,7 @@ MODAL EDITAR PRODUCT
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Editar Cliente</h4>
+                <h4 class="modal-title" id="myModalLabel">Editar Producto</h4>
             </div>
             <div class="modal-body">
 
@@ -253,53 +260,6 @@ MODAL EDITAR PRODUCT
     </div>
 </div>
 
-<!-- ========================================================= 
-MODAL ADD CLIENT
-======================================================== -->
-<div id="client-product" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" #modalNewUser>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Asignar cliente</h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="my-2">
-
-                    <input type="text" autocomplete="off" id="demo-input-search3" placeholder="Buscar Cliente" (keyup)="searchClients(buscadorC.value)" class="form-control m-0" #buscadorC>
-                    <small *ngIf="resultadoC > 0" class="text-muted animated fadeIn">Resultados: {{resultadoC}}</small>
-                    <small *ngIf="sinResultadoC" class="text-muted animated fadeIn">Sin resultados...</small>
-
-                    <!-- SELECCIONAR CLIENTE -->
-                    <!-- <div class="col-12 "> -->
-                    <div *ngIf="clients.length > 0" class="list-group list-group-flush " style="max-height:400px; overflow-y: scroll;">
-
-                        <button type="button" class="list-group-item list-group-item-action pointer animated fadeIn" *ngFor="let client of clients" (click)="addClient = client; assignClient()" data-dismiss="modal">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1 text-break fw-bolder">{{ client.name }}</h5>
-                                <small> 
-                                    <span *ngIf="client.status" class="label label-success"> Activo </span>
-                                    <span *ngIf="!client.status" class="label label-danger"> Desactivado </span>
-                                </small>
-                            </div>
-                            <p class="mb-1" *ngIf="client.phone" > <i class="mdi mdi-cellphone-iphone"></i> {{ client.phone }} </p>
-                            <small *ngIf="client.address" class="text-break"> 
-                                <span *ngIf="client.city" > <i class="mdi mdi-map-marker"></i> {{ client.city }} - </span> {{ client.address }} 
-                            </small>                          
-                            
-                        </button>
-                    </div>
-                    <!-- </div> -->
-                    <!-- SELECCIONAR CLIENTE -->
-
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- ASIGNAR CLIENTE -->
+<app-assign-client [productC]="productC" (actualizar)="actualizarLista()"></app-assign-client>
+<!-- ASIGNAR CLIENTE -->

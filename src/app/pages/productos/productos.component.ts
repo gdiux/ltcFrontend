@@ -28,53 +28,14 @@ export class ProductosComponent implements OnInit {
     this.loadProducts();    
   }
 
-  /** ======================================================================
-   * LOAD CLIENTS
-  ====================================================================== */
-  public clients: Client[] = [];
-  public resultadoC: number = 0;
-  public sinResultadoC: boolean = false;
-  searchClients(termino: string){
-    
-    this.sinResultadoC = false;
-    if (termino.length === 0) {
-      this.clients = [];
-      this.resultadoC = 0;
-      return;
-    }   
-
-    this.searchService.search('clients', termino, '')
-        .subscribe( ({resultados}) => {
-
-          this.clients = resultados;
-          this.resultadoC = resultados.length;
-          
-          if (this.resultadoC === 0) {
-            this.sinResultadoC = true;
-          }
-
-        }, (err) => { Swal.fire('Error', err.error.msg, 'error'); });
-
-  }
+  
 
   /** ======================================================================
    * ASSIGN CLIENTS
   ====================================================================== */
-  public addClient!: Client;
   public productC!: Product;
-  assignClient(){
-
-    this.productC.client = this.addClient.cid;
-
-    this.productsService.updateProduct(this.productC, this.productC.pid!)
-        .subscribe( ({product}) => {
-
-          this.loadProducts();
-          Swal.fire('Estupendo', 'Hemos asignado el cliente correctamente!', 'success');
-
-        }, (err) => { Swal.fire('Error', err.error.msg, 'error') });
-    
-
+  actualizarLista(){
+    this.loadProducts();
   }
 
   /** ======================================================================
@@ -101,9 +62,6 @@ export class ProductosComponent implements OnInit {
             this.sinResultados = true;           
           }
           // COMPROBAR SI EXISTEN RESULTADOS
-
-          console.log(products);
-          
 
           this.cargando = false;
           this.total = total;

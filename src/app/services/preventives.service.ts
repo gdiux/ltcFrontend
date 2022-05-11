@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { environment } from '../../environments/environment';
-import { delay, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment.prod';
+import { LoadPreventives } from '../interfaces/load-preventives';
+import { Preventive } from '../models/preventives.model';
 
 const base_url = environment.base_url;
 
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
+export class PreventivesService {
 
   constructor(  private http: HttpClient) { }
 
@@ -32,23 +32,18 @@ export class SearchService {
   }
 
   /** ================================================================
-   *   SEARCH
+   *   LOAD PREVENTIVES
   ==================================================================== */
-  search(
-    tipo: 'users' | 'clients' | 'products' | 'preventives' | 'correctives',
-    termino: string,
-    query: string = ''
-  ){
-    let endPoint = `/search/${tipo}/${termino}`;
+  loadPreventives(desde: number, limite: number){
+    return this.http.get<LoadPreventives>(`${base_url}/preventives?desde=${desde}&limite=${limite}`, this.headers);
+  }
 
-    return this.http.get< { resultados: any[], total: number } >(`${base_url}${endPoint}`, this.headers)
-          .pipe(
-            map( (resp: any) => {              
-              return resp;
-            })
-          );
-}
-
+  /** ================================================================
+   *   CREATE PREVENTIVES
+  ==================================================================== */
+  createPreventives( formData: any ){
+    return this.http.post<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives`, formData, this.headers);
+  }
 
   // FIN DE LA CLASE
 }

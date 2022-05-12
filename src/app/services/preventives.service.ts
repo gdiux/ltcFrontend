@@ -39,10 +39,31 @@ export class PreventivesService {
   }
 
   /** ================================================================
+   *   LOAD PREVENTIVE ID
+  ==================================================================== */
+  loadPreventiveId(id: string){
+    return this.http.get<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives/${id}`, this.headers);
+  }
+
+  /** ================================================================
    *   CREATE PREVENTIVES
   ==================================================================== */
   createPreventives( formData: any ){
     return this.http.post<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives`, formData, this.headers);
+  }
+
+  /** ================================================================
+   *   POST NOTES
+  ==================================================================== */
+  postNotes( formData: any, id: string ){
+    return this.http.post<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives/notes/${id}`, formData, this.headers);
+  }
+
+  /** ================================================================
+   *   UPDATE PREVENTIVES
+  ==================================================================== */
+  updatePreventives( formData: any, id:string ){
+    return this.http.put<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives/${id}`, formData, this.headers);
   }
 
   // FIN DE LA CLASE

@@ -22,6 +22,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { CreatepreventivesComponent } from './components/createpreventives/createpreventives.component';
 import { CreatecorrectivesComponent } from './components/createcorrectives/createcorrectives.component';
 import { AssignClientComponent } from './components/assign-client/assign-client.component';
+import { PreventivoComponent } from './preventivo/preventivo.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AssignClientComponent } from './components/assign-client/assign-client.
     PerfilComponent,
     CreatepreventivesComponent,
     CreatecorrectivesComponent,
-    AssignClientComponent
+    AssignClientComponent,
+    PreventivoComponent
   ],
   exports:[
     DashboardComponent,

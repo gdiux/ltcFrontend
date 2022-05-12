@@ -95,7 +95,11 @@
                             <ng-container *ngIf="preventives.length > 0">
 
                                 <tr *ngFor="let preventive of preventives">
-                                    <td> {{ preventive.control }} </td>
+                                    <td>
+                                        <a [routerLink]="['/dashboard/preventivo', preventive.preid ]" class="text-decoration-none text-info pointer">
+                                            {{ preventive.control }} 
+                                        </a>
+                                    </td>
                                     <td> {{ preventive.product.serial }} </td>
                                     <td> {{ preventive.staff.name }} </td>
                                     <td data-toggle="tooltip" data-placement="top" title="{{preventive.client.name}}" data-original-title="Tooltip on top">
@@ -108,9 +112,13 @@
                                     </td>
                                     <td> {{ preventive.date | date:'medium' }} </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">
+
+                                        <a [routerLink]="['/dashboard/preventivo', preventive.preid ]" class="text-decoration-none text-info pointer">
+                                            <i class="mdi mdi-call-made"></i>
+                                        </a>
+                                        <!-- <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">
                                             <i class="ti-close" aria-hidden="true"></i>
-                                        </button>
+                                        </button> -->
                                     </td>
                                 </tr>
 

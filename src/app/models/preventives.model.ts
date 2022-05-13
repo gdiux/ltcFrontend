@@ -5,7 +5,8 @@ interface _notas{
 };
 
 interface _img{
-    img: string
+    img: string,
+    _id?: string
 };
 
 export class Preventive {

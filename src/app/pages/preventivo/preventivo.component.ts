@@ -43,6 +43,8 @@ export class PreventivoComponent implements OnInit {
    *  LOAD PREVENTIVE ID
   ==================================================================== */
   private _preventive!: Preventive;
+  public imgsbefore: boolean = false;
+  public imgsafter: boolean = false;
 
   public get preventive(): Preventive {
     return this._preventive;
@@ -58,6 +60,14 @@ export class PreventivoComponent implements OnInit {
         .subscribe( ({preventive}) => {
 
           this.preventive = preventive;
+
+          if (preventive.imgBef.length > 0) {
+            this.imgsbefore = true;
+          }
+
+          if (preventive.imgAft.length > 0) {
+            this.imgsafter = true;
+          }
 
           document.title = `Preventivo #${preventive.control} - LTC System`;
           
@@ -187,15 +197,20 @@ export class PreventivoComponent implements OnInit {
    * ======================================================================================
    *   ACTUALIZAR IMAGEN
   ==================================================================== */
-  public imgTemp: any = null;
+  public imgTempBef: any = null;
+  public imgTempAft: any = null;
   public subirImagen!: File;
-  cambiarImage(file: any): any{
+  cambiarImage(file: any, type: 'before' | 'after'): any{
 
     this.subirImagen = file.files[0];
     
-    if (!this.subirImagen ) {       
-      return this.imgTemp = null;      
-    }    
+    if (!this.subirImagen) {  
+      if (type === 'before') {        
+        return this.imgTempBef = null;      
+      }else if (type === 'after') {
+        return this.imgTempAft = null; 
+      }      
+    }
     
     let fileTemp = this.subirImagen;
 
@@ -203,7 +218,12 @@ export class PreventivoComponent implements OnInit {
     const url64 = reader.readAsDataURL(fileTemp);
     
     reader.onloadend = () => {
-      this.imgTemp = reader.result;
+
+      if (type === 'before') {       
+        this.imgTempBef = reader.result;
+      }else if (type === 'after') {
+        this.imgTempAft = reader.result;
+      }
     }    
 
   }
@@ -211,7 +231,8 @@ export class PreventivoComponent implements OnInit {
   /** ================================================================
    *  SUBIR IMAGEN fileImg
   ==================================================================== */
-  @ViewChild('fileImg') fileImg!: any;
+  @ViewChild('fileImgBef') fileImgBef!: any;
+  @ViewChild('fileImgAft') fileImgAft!: any;
 
   public imgProducto: string = 'no-image';
 
@@ -223,25 +244,65 @@ export class PreventivoComponent implements OnInit {
       if (desc === 'imgBef') {
         this.preventive.imgBef?.push({
           img
-        });        
+        });
+        this.imgsbefore = true;
       }else if(desc === 'imgAft'){
         this.preventive.imgAft?.push({
           img
         });
+        this.imgsafter = true;
       }
 
       
     });
     
-    this.fileImg!.nativeElement.value = '';
     this.imgProducto = 'no-image';
-    this.imgTemp = null;
     
+    if (desc === 'imgBef') {
+      this.imgTempBef = null;
+      this.fileImgBef!.nativeElement.value = '';
+    }else if(desc === 'imgAft'){
+      this.imgTempAft = null;
+      this.fileImgAft!.nativeElement.value = '';
+    }
+    
+  }
+
+  /** ================================================================
+   *  DELETE IMAGEN fileImg
+  ==================================================================== */
+  deleteImg(img:string, desc: 'imgBef' | 'imgAft', type: 'preventives' | 'correctives' = 'preventives'){
+
+    this.fileUploadService.deleteImg(type, this.preventive.preid!, desc, img)
+        .subscribe( (resp:any) => {
+          
+          this.preventive.imgAft = resp.preventive.imgAft;
+          this.preventive.imgBef = resp.preventive.imgBef;
+
+          if (this.preventive.imgBef.length > 0) {
+            this.imgsbefore = true;
+          }  
+
+          if (this.preventive.imgAft.length > 0) {
+            this.imgsafter = true;
+          }
+
+          Swal.fire('Estupendo', 'Se ha eliminado la imagen con exito', 'success');
+          
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+          
+        });
+    
+
   }
 
   /** ===================================================================
    * SWIPER
   ======================================================================= */
+  
 
   public config: SwiperOptions = {
     slidesPerView: 3,
@@ -249,6 +310,7 @@ export class PreventivoComponent implements OnInit {
     navigation: true,
     pagination: { clickable: true },
     scrollbar: { draggable: true },
+    centeredSlides: true,
     breakpoints: {
       100: {
         slidesPerView: 1,

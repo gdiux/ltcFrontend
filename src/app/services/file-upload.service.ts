@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 const base_url = environment.base_url;
 
@@ -9,7 +10,7 @@ const base_url = environment.base_url;
 })
 export class FileUploadService {
 
-  constructor() { }
+  constructor(  private http: HttpClient) { }
 
    /** ================================================================
    *   GET TOKEN
@@ -67,6 +68,20 @@ export class FileUploadService {
       console.log(error);      
       return false;
     }
+
+  }
+
+  /** ================================================================
+   *   DELETE IMAGES
+  ==================================================================== */
+  deleteImg(
+    type: 'products' | 'logo' | 'user' | 'preventives' | 'correctives',
+    id: string,
+    desc: 'imgBef' | 'imgAft' | 'video' | 'img' = 'img',
+    img: string
+  ){
+
+    return this.http.delete(`${base_url}/uploads/delete/${type}/${id}/${desc}/${img}`, this.headers);
 
   }
 

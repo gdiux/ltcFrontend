@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { SwiperModule } from 'swiper/angular';
+
 // MODULES
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -58,7 +60,8 @@ import { PreventivoComponent } from './preventivo/preventivo.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    PipesModule
+    PipesModule,
+    SwiperModule
     
   ]
 })

@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
+
+import Swal from 'sweetalert2';
 
 // MODELS
 import { Preventive } from 'src/app/models/preventives.model';
@@ -8,14 +11,13 @@ import { Preventive } from 'src/app/models/preventives.model';
 import { PreventivesService } from '../../services/preventives.service';
 import { SearchService } from '../../services/search.service';
 import { FileUploadService } from '../../services/file-upload.service';
-import Swal from 'sweetalert2';
-import { FormBuilder, Validators } from '@angular/forms';
+import { SwiperOptions } from 'swiper';
+
 
 @Component({
   selector: 'app-preventivo',
   templateUrl: './preventivo.component.html',
-  styles: [
-  ]
+  styleUrls: ['./preventivo.component.css']
 })
 
 export class PreventivoComponent implements OnInit {
@@ -40,13 +42,21 @@ export class PreventivoComponent implements OnInit {
   /** ================================================================
    *  LOAD PREVENTIVE ID
   ==================================================================== */
-  public preventive!: Preventive;
+  private _preventive!: Preventive;
+
+  public get preventive(): Preventive {
+    return this._preventive;
+  }
+
+  public set preventive(value: Preventive) {
+    this._preventive = value;
+  }
+  
   loadPreventiveId(id: string){
 
     this.preventivesService.loadPreventiveId(id)
         .subscribe( ({preventive}) => {
 
-          console.log(preventive);
           this.preventive = preventive;
 
           document.title = `Preventivo #${preventive.control} - LTC System`;
@@ -91,7 +101,7 @@ export class PreventivoComponent implements OnInit {
       
       if (result.isConfirmed) {
 
-        this.preventivesService.updatePreventives(data, this.preventive.preid)
+        this.preventivesService.updatePreventives(data, this.preventive.preid!)
         .subscribe( ({preventive}) => {
 
           this.preventive.checkin = preventive.checkin;
@@ -122,7 +132,8 @@ export class PreventivoComponent implements OnInit {
   @ViewChild('notaI') notaI!: ElementRef;
   public formsNoteSubmitted: boolean = false;
   public formNotes =  this.fb.group({
-    note: ['', [Validators.minLength(1), Validators.required]]
+    note: ['', [Validators.minLength(1), Validators.required]],
+    date: ['']
   });
 
   postNota(){
@@ -134,7 +145,10 @@ export class PreventivoComponent implements OnInit {
       return;
     }
 
-    this.preventivesService.postNotes(this.formNotes.value, this.preventive.preid)
+    // AGREGAR FECHA
+    this.formNotes.value.date = Date.now();
+
+    this.preventivesService.postNotes(this.formNotes.value, this.preventive.preid!)
         .subscribe( ({preventive}) =>{
           
           this.formsNoteSubmitted = false;
@@ -163,6 +177,99 @@ export class PreventivoComponent implements OnInit {
     }
 
   }
+
+
+  /** ================================================================
+   *  ======================================================================================
+   * ======================================================================================
+   * ======================================================================================
+   * ======================================================================================
+   * ======================================================================================
+   *   ACTUALIZAR IMAGEN
+  ==================================================================== */
+  public imgTemp: any = null;
+  public subirImagen!: File;
+  cambiarImage(file: any): any{
+
+    this.subirImagen = file.files[0];
+    
+    if (!this.subirImagen ) {       
+      return this.imgTemp = null;      
+    }    
+    
+    let fileTemp = this.subirImagen;
+
+    const reader = new FileReader();
+    const url64 = reader.readAsDataURL(fileTemp);
+    
+    reader.onloadend = () => {
+      this.imgTemp = reader.result;
+    }    
+
+  }
+      
+  /** ================================================================
+   *  SUBIR IMAGEN fileImg
+  ==================================================================== */
+  @ViewChild('fileImg') fileImg!: any;
+
+  public imgProducto: string = 'no-image';
+
+  subirImg(desc: 'imgBef' | 'imgAft' | 'video'){
+    
+    this.fileUploadService.updateImage( this.subirImagen, 'preventives', this.preventive.preid!, desc)
+    .then( img => {
+
+      if (desc === 'imgBef') {
+        this.preventive.imgBef?.push({
+          img
+        });        
+      }else if(desc === 'imgAft'){
+        this.preventive.imgAft?.push({
+          img
+        });
+      }
+
+      
+    });
+    
+    this.fileImg!.nativeElement.value = '';
+    this.imgProducto = 'no-image';
+    this.imgTemp = null;
+    
+  }
+
+  /** ===================================================================
+   * SWIPER
+  ======================================================================= */
+
+  public config: SwiperOptions = {
+    slidesPerView: 3,
+    spaceBetween: 50,
+    navigation: true,
+    pagination: { clickable: true },
+    scrollbar: { draggable: true },
+    breakpoints: {
+      100: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      // when window width is >= 480px
+      480: {
+        slidesPerView: 1,
+        spaceBetween: 30
+      },
+      // when window width is >= 640px
+      640: {
+        slidesPerView: 3,
+        spaceBetween: 50
+      }
+    }
+  };
 
 
   // FIN DE LA CLASE

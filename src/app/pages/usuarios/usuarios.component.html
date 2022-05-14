@@ -26,7 +26,11 @@
                                         <img [src]=" user.img! | imagen: 'user' " alt="user" width="40" class="img-circle" />
                                     </a>
                                 </td>
-                                <td> {{ user.name }} </td>
+                                <td>
+                                    <a [routerLink]="['/dashboard/perfil', user.uid]">
+                                        {{ user.name }} 
+                                    </a>
+                                </td>
                                 <td> {{ user.usuario }} </td>
                                 <td>
                                     <span *ngIf="user.role === 'ADMIN'" class="label label-primary"> Admin </span>

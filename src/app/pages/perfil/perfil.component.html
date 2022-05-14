@@ -1,10 +1,195 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<!-- Row -->
 <div class="row">
-    <div class="col-12">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
             <div class="card-body">
-                <p>perfil works!</p>
-                This is some text within a card block.
+                <div class="m-t-30 text-center">
+                    <img src="../assets/images/users/5.jpg" class="img-circle" width="150" />
+                    <h4 class="card-title m-t-10"> {{ user.name }} </h4>
+                    <h6 class="card-subtitle"> {{ user.role }} </h6>
+
+                </div>
             </div>
         </div>
     </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#preventives" role="tab">Preventivos</a>
+                </li>
+                <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Profile</a> </li> -->
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+
+                <div class="tab-pane active" id="preventives" role="tabpanel">
+
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div>
+                                <h4 class="card-title"><span class="lstick"></span>Preventivos {{ selectEstado.value }}s {{total}}</h4>
+                            </div>
+                            <div class="ml-auto">
+                                <select (change)=" estado = selectEstado.value ; loadPreventives() " class="custom-select b-0" #selectEstado>
+                                    <option value="Pendiente" selected>Pendientes</option>
+                                    <option value="Terminado">Terminados</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive m-t-20">
+                            <table class="table vm no-th-brd no-wrap pro-of-month">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th colspan="2">Creado por</th>
+                                        <th>Cliente</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngIf="preventives.length === 0">
+                                        <td colspan="5">
+                                            <h4 class="mb-0 text-muted text-center"> No tiene ningun preventivo {{ selectEstado.value }} ...</h4>
+                                        </td>
+                                    </tr>
+
+                                    <tr *ngFor="let preventive of preventives">
+                                        <td>
+                                            <a [routerLink]="['/preventive', preventive.preid]" class="fw-bold">
+                                                {{ preventive.control }}
+                                            </a>
+                                        </td>
+                                        <td style="width:50px;">
+                                            <span class="round">
+                                                <img [src]=" preventive.create.img | imagen:'user' " alt="user" width="50">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <h6> {{ preventive.create.name }} </h6>
+                                            <small class="text-muted"> {{ preventive.date | date: 'MMMM d Y h:MM:ss a' }}</small>
+                                        </td>
+                                        <td>
+                                            <h6> {{ preventive.client.name }} </h6>
+                                            <small class="text-muted"> {{ preventive.product.serial }} </small>
+                                        </td>
+                                        <td>
+                                            <span class="label label-rounded" [ngClass]="{'label-warning': preventive.estado === 'Pendiente', 'label-success': preventive.estado === 'Terminado'}"> {{ preventive.estado}} </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--second tab-->
+
+                <div class="tab-pane" id="profile" role="tabpanel">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-6 b-r"> <strong>Full Name</strong>
+                                <br>
+                                <p class="text-muted">Johnathan Deo</p>
+                            </div>
+                            <div class="col-md-3 col-xs-6 b-r"> <strong>Mobile</strong>
+                                <br>
+                                <p class="text-muted">(123) 456 7890</p>
+                            </div>
+                            <div class="col-md-3 col-xs-6 b-r"> <strong>Email</strong>
+                                <br>
+                                <p class="text-muted">johnathan@admin.com</p>
+                            </div>
+                            <div class="col-md-3 col-xs-6"> <strong>Location</strong>
+                                <br>
+                                <p class="text-muted">London</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <p class="m-t-30">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper
+                            nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
+                            specimen book. It has survived not only five centuries </p>
+                        <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <h4 class="font-medium m-t-30">Skill Set</h4>
+                        <hr>
+                        <h5 class="m-t-30">Wordpress <span class="pull-right">80%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                        </div>
+                        <h5 class="m-t-30">HTML 5 <span class="pull-right">90%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                        </div>
+                        <h5 class="m-t-30">jQuery <span class="pull-right">50%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                        </div>
+                        <h5 class="m-t-30">Photoshop <span class="pull-right">70%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="settings" role="tabpanel">
+                    <div class="card-body">
+                        <form class="form-horizontal form-material" [formGroup]="formUpdate" (ngSubmit)="updateUser()">
+
+                            <div class="form-group" [ngClass]="{'has-danger': validateEditForm('usuario')}">
+                                <label class="col-md-12"> Usuario </label>
+                                <div class="col-md-12">
+                                    <input formControlName="usuario" type="text" placeholder="Johnathan Doe" class="form-control " [ngClass]="{'form-control-danger': validateEditForm('usuario')}">
+                                    <small *ngIf="validateEditForm('usuario')" class="form-control-feedback animated fadeIn">Este campo es obligatorio</small>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" [ngClass]="{'has-danger': validateEditForm('name')}">
+                                <label class="col-md-12"> Nombres </label>
+                                <div class="col-md-12">
+                                    <input formControlName="name" type="text" placeholder="Johnathan Doe" class="form-control form-control-line" [ngClass]="{'form-control-danger': validateEditForm('name')}">
+                                    <small *ngIf="validateEditForm('name')" class="form-control-feedback animated fadeIn">Este campo es obligatorio</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-12">Password</label>
+                                <div class="col-md-12">
+                                    <input formControlName="password" type="password" value="password" class="form-control form-control-line" [ngClass]="{'form-control-danger': validateEditForm('password')}">
+                                    <small *ngIf="validateEditForm('password')" class="form-control-feedback animated fadeIn">Este campo es obligatorio</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-12">Re-password</label>
+                                <div class="col-md-12">
+                                    <input formControlName="repassword" type="password" value="password" class="form-control form-control-line" [ngClass]="{'form-control-danger': validateEditForm('repassword')}">
+                                    <small *ngIf="validateEditForm('repassword')" class="form-control-feedback animated fadeIn">Este campo es obligatorio</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-success">Actualizar perfil</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
 </div>
+<!-- Row -->
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

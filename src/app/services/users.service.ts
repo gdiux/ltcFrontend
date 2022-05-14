@@ -114,6 +114,14 @@ export class UsersService {
   }
 
   /** ================================================================
+   *  LOAD USER BY ID /user/:id'
+  ==================================================================== */
+  loadUserId(id: string){
+    return this.http.get<{ok: boolean, user: User}>(`${base_url}/users/user/${id}`, this.headers);
+  }
+
+
+  /** ================================================================
    *  CREATE USER
   ==================================================================== */
   createUser( formaData: any ){

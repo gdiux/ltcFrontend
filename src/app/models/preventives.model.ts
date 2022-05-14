@@ -6,7 +6,8 @@ interface _notas{
 
 interface _img{
     img: string,
-    _id?: string
+    _id?: string,
+    date?: Date
 };
 
 export class Preventive {

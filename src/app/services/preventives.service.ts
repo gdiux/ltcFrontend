@@ -46,6 +46,12 @@ export class PreventivesService {
   }
 
   /** ================================================================
+   *   LOAD PREVENTIVES FOR STAFF /staff/:staff
+  ==================================================================== */
+  loadPreventivesStaff(id: string, estado: 'Pendiente' | 'Terminado', query: string = ''){
+    return this.http.get<LoadPreventives>(`${base_url}/preventives/staff/${id}?estado=${estado}&${query}`, this.headers);
+  }
+  /** ================================================================
    *   CREATE PREVENTIVES
   ==================================================================== */
   createPreventives( formData: any ){

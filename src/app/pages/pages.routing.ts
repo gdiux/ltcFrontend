@@ -14,6 +14,7 @@ import { CorrectivosComponent } from './correctivos/correctivos.component';
 import { PreventivosComponent } from './preventivos/preventivos.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PreventivoComponent } from './preventivo/preventivo.component';
+import { CorrectivoComponent } from './correctivo/correctivo.component';
 
 
 // COMPONENTS
@@ -29,6 +30,7 @@ const routes: Routes = [
           { path: '', component: DashboardComponent, data:{ title: 'Dashboard' } },
           { path: 'clientes', component: ClientesComponent, data:{ title: 'Clientes' } },
           { path: 'correctivos', component: CorrectivosComponent, data:{ title: 'Correctivos' } },
+          { path: 'correctivo/:id', component: CorrectivoComponent, data:{ title: 'Correctivo' } },
           { path: 'preventivos', component: PreventivosComponent, data:{ title: 'Preventivos' } },
           { path: 'preventivo/:id', component: PreventivoComponent, data:{ title: 'Preventivo' } },
           { path: 'productos', component: ProductosComponent, data:{ title: 'Productos' } },

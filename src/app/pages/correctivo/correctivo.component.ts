@@ -1,30 +1,24 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+
 import { Router, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { SwiperOptions } from 'swiper';
 import Swal from 'sweetalert2';
-
-// MODELS
-import { Preventive } from 'src/app/models/preventives.model';
-
-// SERVICES
-import { PreventivesService } from '../../services/preventives.service';
-import { SearchService } from '../../services/search.service';
+import { CorrectivesService } from '../../services/correctives.service';
 import { FileUploadService } from '../../services/file-upload.service';
-
+import { Corrective } from '../../models/correctives.model';
 
 @Component({
-  selector: 'app-preventivo',
-  templateUrl: './preventivo.component.html',
-  styleUrls: ['./preventivo.component.css']
+  selector: 'app-correctivo',
+  templateUrl: './correctivo.component.html',
+  styles: [
+  ]
 })
-
-export class PreventivoComponent implements OnInit {
+export class CorrectivoComponent implements OnInit {
 
   constructor(  private activatedRoute: ActivatedRoute,
-                private preventivesService: PreventivesService,
-                private searchService: SearchService,
+                private correctivesService: CorrectivesService,
                 private fb: FormBuilder,
                 private fileUploadService: FileUploadService) { }
 
@@ -33,43 +27,43 @@ export class PreventivoComponent implements OnInit {
     this.activatedRoute.params
         .subscribe( ({id}) => {
           
-          this.loadPreventiveId(id);
+          this.loadCorrectiveId(id);
           
         });
 
-  };
+  }
 
   /** ================================================================
-   *  LOAD PREVENTIVE ID
+   *  LOAD CORRECTIVE ID
   ==================================================================== */
-  private _preventive!: Preventive;
+  private _corrective!: Corrective;
   public imgsbefore: boolean = false;
   public imgsafter: boolean = false;
 
-  public get preventive(): Preventive {
-    return this._preventive;
+  public get corrective(): Corrective {
+    return this._corrective;
   }
 
-  public set preventive(value: Preventive) {
-    this._preventive = value;
+  public set corrective(value: Corrective) {
+    this._corrective = value;
   }
   
-  loadPreventiveId(id: string){
+  loadCorrectiveId(id: string){
 
-    this.preventivesService.loadPreventiveId(id)
-        .subscribe( ({preventive}) => {
+    this.correctivesService.loadCorrectiveId(id)
+        .subscribe( ({corrective}) => {
+          
+          this.corrective = corrective;
 
-          this.preventive = preventive;
-
-          if (preventive.imgBef.length > 0) {
+          if (corrective?.imgBef.length > 0) {
             this.imgsbefore = true;
           }
 
-          if (preventive.imgAft.length > 0) {
+          if (corrective?.imgAft.length > 0) {
             this.imgsafter = true;
           }
 
-          document.title = `Preventivo #${preventive.control} - LTC System`;
+          document.title = `Preventivo #${corrective?.control} - LTC System`;
           
 
         });
@@ -112,12 +106,12 @@ export class PreventivoComponent implements OnInit {
       
       if (result.isConfirmed) {
 
-        this.preventivesService.updatePreventives(data, this.preventive.preid!)
-        .subscribe( ({preventive}) => {
+        this.correctivesService.updateCorrective(data, this.corrective.coid!)
+        .subscribe( ({corrective}) => {
 
-          this.preventive.checkin = preventive.checkin;
-          this.preventive.checkout = preventive.checkout;
-          this.preventive.estado = preventive.estado;
+          this.corrective.checkin = corrective.checkin;
+          this.corrective.checkout = corrective.checkout;
+          this.corrective.estado = corrective.estado;
           Swal.fire('Estupendo', msg, 'success');
 
         }, (err) => {
@@ -160,13 +154,13 @@ export class PreventivoComponent implements OnInit {
     // AGREGAR FECHA
     this.formNotes.value.date = Date.now();
 
-    this.preventivesService.postNotes(this.formNotes.value, this.preventive.preid!)
-        .subscribe( ({preventive}) =>{
+    this.correctivesService.postNotesCorrectives(this.formNotes.value, this.corrective.coid!)
+        .subscribe( ({corrective}) =>{
           
           this.formsNoteSubmitted = false;
           this.formNotes.reset();
 
-          this.preventive.notes = preventive.notes;
+          this.corrective.notes = corrective.notes;
           
 
         }, (err) => {
@@ -240,20 +234,20 @@ export class PreventivoComponent implements OnInit {
 
   subirImg(desc: 'imgBef' | 'imgAft' | 'video'){
     
-    this.fileUploadService.updateImage( this.subirImagen, 'preventives', this.preventive.preid!, desc)
+    this.fileUploadService.updateImage( this.subirImagen, 'correctives', this.corrective.coid!, desc)
     .then( img => {
 
       console.log(img);
       
 
       if (desc === 'imgBef') {
-        this.preventive.imgBef?.push({
+        this.corrective.imgBef?.push({
           img: img.nombreArchivo,
           date: img.date
         });
         this.imgsbefore = true;
       }else if(desc === 'imgAft'){
-        this.preventive.imgAft?.push({
+        this.corrective.imgAft?.push({
           img: img.nombreArchivo,
           date: img.date
         });
@@ -278,19 +272,19 @@ export class PreventivoComponent implements OnInit {
   /** ================================================================
    *  DELETE IMAGEN fileImg
   ==================================================================== */
-  deleteImg(img:string, desc: 'imgBef' | 'imgAft', type: 'preventives' | 'correctives' = 'preventives'){
+  deleteImg(img:string, desc: 'imgBef' | 'imgAft', type: 'correctives' | 'correctives' = 'correctives'){
 
-    this.fileUploadService.deleteImg(type, this.preventive.preid!, desc, img)
+    this.fileUploadService.deleteImg(type, this.corrective.coid!, desc, img)
         .subscribe( (resp:any) => {
           
-          this.preventive.imgAft = resp.preventive.imgAft;
-          this.preventive.imgBef = resp.preventive.imgBef;
+          this.corrective.imgAft = resp.corrective.imgAft;
+          this.corrective.imgBef = resp.corrective.imgBef;
 
-          if (this.preventive.imgBef.length > 0) {
+          if (this.corrective.imgBef.length > 0) {
             this.imgsbefore = true;
           }  
 
-          if (this.preventive.imgAft.length > 0) {
+          if (this.corrective.imgAft.length > 0) {
             this.imgsafter = true;
           }
 

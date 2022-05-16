@@ -128,6 +128,13 @@ export class UsersService {
     return this.http.post<{user: User, ok: boolean}>(`${base_url}/users`, formaData, this.headers);
   }
 
+  /** ================================================================
+   *  UPDATE USER
+  ==================================================================== */
+  updateUser( formData: any, id: string ){
+    return this.http.put< { user: User, ok: boolean } >(`${base_url}/users/${id}`, formData, this.headers);
+  }
+
 
 
 

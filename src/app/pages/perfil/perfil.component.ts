@@ -11,6 +11,7 @@ import { PreventivesService } from '../../services/preventives.service';
 // MODELS
 import { User } from '../../models/users.model';
 import { Preventive } from '../../models/preventives.model';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-perfil',
@@ -24,11 +25,15 @@ export class PerfilComponent implements OnInit {
                 private usersService: UsersService,
                 private preventivesServices: PreventivesService,
                 private router: Router,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder) { 
+                  
+                  this.user = usersService.user;
+
+                }
 
   ngOnInit(): void {
 
-    this.user = this.usersService.user;
+    
     
     this.activatedRoute.params
         .subscribe( ({id}) => {
@@ -87,9 +92,6 @@ export class PerfilComponent implements OnInit {
           this.total = total;
           this.preventives = preventives;
 
-          console.log(preventives);
-          
-
         });
 
   }
@@ -126,6 +128,34 @@ export class PerfilComponent implements OnInit {
     if (this.formUpdate.invalid) {
       return;
     }
+
+    if (this.formUpdate.value.password === '') {
+      
+      this.formUpdate.reset({
+        usuario: this.formUpdate.value.usuario,
+        name: this.formUpdate.value.name
+      });
+      
+    }
+
+    this.usersService.updateUser(this.formUpdate.value, this.user.uid!)
+        .subscribe( ({user}) => {
+
+          this.user = user;
+
+          this.activatedRoute.params
+          .subscribe( ({id}) =>{
+
+            if (this.usersService.user.uid === id) {
+
+              this.usersService.user.name = this.user.name;
+              this.usersService.user.usuario = this.user.usuario;
+              
+            }
+
+          });
+
+        });
 
   }
 

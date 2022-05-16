@@ -2,20 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // MODELS
-import { Preventive } from '../models/preventives.model';
+import { Corrective } from '../models/correctives.model';
 
 // INTERFACES
-import { LoadPreventives } from '../interfaces/load-preventives';
+import { LoadCorrectives } from '../interfaces/load-correctives.interface';
 
 
 import { environment } from '../../environments/environment.prod';
-
 const base_url = environment.base_url;
 
 @Injectable({
   providedIn: 'root'
 })
-export class PreventivesService {
+export class CorrectivesService {
 
   constructor(  private http: HttpClient) { }
 
@@ -38,45 +37,40 @@ export class PreventivesService {
   }
 
   /** ================================================================
-   *   LOAD PREVENTIVES
+   *   LOAD CORRECTIVES
   ==================================================================== */
-  loadPreventives(desde: number, limite: number){
-    return this.http.get<LoadPreventives>(`${base_url}/preventives?desde=${desde}&limite=${limite}`, this.headers);
+  loadCorrectives(desde: number = 0, limite: number = 10){
+    return this.http.get<LoadCorrectives>(`${base_url}/correctives?desde=${desde}&limite=${limite}`, this.headers);
   }
 
   /** ================================================================
-   *   LOAD PREVENTIVE ID
+   *   LOAD CORRECTIVE ID
   ==================================================================== */
-  loadPreventiveId(id: string){
-    return this.http.get<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives/${id}`, this.headers);
+  loadCorrectiveId(id: string){
+    return this.http.get<{ corrective: Corrective, ok: boolean }>(`${base_url}/correctives/${id}`, this.headers);
   }
 
   /** ================================================================
-   *   LOAD PREVENTIVES FOR STAFF /staff/:staff
+   *   CREATE CORRECTIVES
   ==================================================================== */
-  loadPreventivesStaff(id: string, estado: 'Pendiente' | 'Terminado', query: string = ''){
-    return this.http.get<LoadPreventives>(`${base_url}/preventives/staff/${id}?estado=${estado}&${query}`, this.headers);
-  }
-  /** ================================================================
-   *   CREATE PREVENTIVES
-  ==================================================================== */
-  createPreventives( formData: any ){
-    return this.http.post<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives`, formData, this.headers);
+  createCorrectives(formData: any){
+    return this.http.post<{corrective: Corrective, ok: boolean}>(`${base_url}/correctives`, formData, this.headers);
   }
 
   /** ================================================================
    *   POST NOTES
   ==================================================================== */
-  postNotes( formData: any, id: string ){
-    return this.http.post<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives/notes/${id}`, formData, this.headers);
+  postNotesCorrectives( formData: any, id: string ){
+    return this.http.post<{ok: boolean, corrective: Corrective}>(`${base_url}/correctives/notes/${id}`, formData, this.headers);
   }
 
   /** ================================================================
-   *   UPDATE PREVENTIVES
+   *   UPDATE CORRECTIVE
   ==================================================================== */
-  updatePreventives( formData: any, id:string ){
-    return this.http.put<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives/${id}`, formData, this.headers);
+  updateCorrective(formData: any, id: string){
+    return this.http.put<{corrective: Corrective, ok: boolean}>(`${base_url}/correctives/${id}`, formData, this.headers);
   }
+
 
   // FIN DE LA CLASE
 }

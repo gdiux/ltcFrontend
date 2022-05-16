@@ -13,7 +13,9 @@ export class Product{
         public date?: Date,
         public pid?: string,
         public cliente?: boolean,
-        public img?: string
+        public img?: string,
+        public preventivo?: boolean,
+        public frecuencia?: number
     ) {}
 
 }

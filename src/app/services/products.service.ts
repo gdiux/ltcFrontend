@@ -43,8 +43,8 @@ export class ProductsService {
   /** ================================================================
    *   LOAD PRODUCTS
   ==================================================================== */
-  loadProducts(desde: number, limite: number){
-    return this.http.get<LoadProducts>( `${base_url}/products?desde=${desde}&limite=${limite}`, this.headers );
+  loadProducts(desde: number, limite: number, query: string = ''){
+    return this.http.get<LoadProducts>( `${base_url}/products?desde=${desde}&limite=${limite}&${query}`, this.headers );
   }
 
   /** ================================================================

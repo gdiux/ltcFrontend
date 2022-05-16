@@ -83,7 +83,8 @@ export class ProductosComponent implements OnInit {
     brand: [''],
     model: [''],
     year: [''],
-    estado: ['none']
+    estado: ['none'],
+    frecuencia: 3
   });
 
   createProduct(){
@@ -103,7 +104,8 @@ export class ProductosComponent implements OnInit {
           this.total ++;
           this.newProductSubmitted = false;
           this.newProductForm.reset({
-            estado: ['none']
+            estado: ['none'],
+            frecuencia: 3
           });
           this.savingNew = false;
 

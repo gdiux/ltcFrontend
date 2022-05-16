@@ -27,6 +27,7 @@ import { AssignClientComponent } from './components/assign-client/assign-client.
 import { PreventivoComponent } from './preventivo/preventivo.component';
 import { CorrectivoComponent } from './correctivo/correctivo.component';
 import { ProductoComponent } from './producto/producto.component';
+import { CardsComponent } from './dashboard/components/cards/cards.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ProductoComponent } from './producto/producto.component';
     AssignClientComponent,
     PreventivoComponent,
     CorrectivoComponent,
-    ProductoComponent
+    ProductoComponent,
+    CardsComponent
   ],
   exports:[
     DashboardComponent,

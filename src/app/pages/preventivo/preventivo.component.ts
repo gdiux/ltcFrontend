@@ -93,7 +93,9 @@ export class PreventivoComponent implements OnInit {
     }else{
       data = {
         checkout: Date.now(),
-        estado: 'Terminado'
+        estado: 'Terminado',
+        check: true,
+        frecuencia: this.preventive.product.frecuencia || 3
       }
       msg = 'El checkOut se a actualizado exitosamente!';
       text = 'de marcar la checkout ahora?';

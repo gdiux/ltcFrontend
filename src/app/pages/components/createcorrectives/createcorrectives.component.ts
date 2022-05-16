@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
 import Swal from 'sweetalert2';
 
 // SERVICES
@@ -15,11 +15,18 @@ import { User } from 'src/app/models/users.model';
   styleUrls: ['./createcorrectives.component.css']
 })
 export class CreatecorrectivesComponent implements OnInit {
+  
+  @Input('inProduct') inProduct: any;
 
   constructor(  private searchService: SearchService,
                 private correctivesService: CorrectivesService) { }
 
   ngOnInit(): void {
+
+    if(this.inProduct){
+      this.productSelect = this.inProduct;
+      this.selectProd = true;
+    }
   }
 
   /* ============================================================================

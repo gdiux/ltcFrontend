@@ -1,10 +1,61 @@
+<!-- ============================================================== -->
+<!-- Stats box -->
+<!-- ============================================================== -->
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <p>dashboard works!</p>
-                This is some text within a card block.
+
+    <div class="col-lg-3">
+        <app-cards [coleccion]="'clientes'"></app-cards>
+    </div>
+
+    <div class="col-lg-3">
+        <app-cards [coleccion]="'usuarios'"></app-cards>
+    </div>
+
+    <div class="col-lg-3">
+        <app-cards [coleccion]="'preventivos'"></app-cards>
+    </div>
+
+    <div class="col-lg-3">
+        <app-cards [coleccion]="'correctivos'"></app-cards>
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- Sales overview chart -->
+<!-- ============================================================== -->
+
+
+<!-- ============================================================== -->
+<!-- PROXIMOS PREVENTIVOS -->
+<!-- ============================================================== -->
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex">
+            <h4 class="card-title"><span class="lstick bg-warning"></span>Proximos Mantenimientos Preventivos</h4>
+            <div class="ml-auto">
+                <span class="badge badge-warning fs-5"> {{ totalProximos | number }} </span>
             </div>
+        </div>
+    </div>
+    <div class="activity-box">
+        <div class="card-body">
+            <!-- Activity item-->
+            <ng-container *ngIf="products.length > 0">
+
+                <div class="activity-item" *ngFor="let product of products">
+                    <div class="round m-r-20">
+                        <img [src]=" product.img! | imagen: 'products' " alt="user" width="50">
+                    </div>
+                    <div class="m-t-10">
+
+                        <h5 class="m-b-0 font-medium"> <a [routerLink]="['/dashboard/producto', product.pid]"> {{ product.code }} </a>
+                            <span class="text-muted font-14 m-l-10">| &nbsp; {{ product.next | date:'MMMM d y' }} </span></h5>
+                        <h6 class="text-muted"> {{ product.client?.name }} </h6>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- Activity item-->
         </div>
     </div>
 </div>

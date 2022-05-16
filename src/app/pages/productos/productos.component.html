@@ -168,7 +168,8 @@ MODAL AGREGAR PRODUCT
                         </div>
 
                         <div class="col-md-12 m-b-20">
-                            <select formControlName="estado" class="form-control" #role>
+                            <label for="estado"> Estado</label>
+                            <select formControlName="estado" class="form-control" id="estado">
                                 <option value="none" selected>Seleccionar</option>
                                 <option value="Disponible" >Disponible</option>
                                 <option value="Mantenimiento" >Mantenimiento</option>
@@ -177,6 +178,18 @@ MODAL AGREGAR PRODUCT
                             <div *ngIf=" newProductSubmitted && role.value === 'none' " class="form-control-feedback">
                                 <small> Selecciona una condicion </small>
                             </div>
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
+                            <label for="frecuencia"> Frecuencia de mantenimiento</label>
+                            <select formControlName="frecuencia" class="form-control" id="frecuencia">
+                                <option value="1" >1</option>
+                                <option value="2" >2</option>
+                                <option value="3" >3</option>
+                                <option value="4" >4</option>
+                                <option value="5" >5</option>
+                                <option value="6" >6</option>
+                            </select>
                         </div>
 
                         <small class="mb-0 text-muted text-break"> <span class="fw-bold">NOTA:</span> Los campos de texto que tengan ** son obligatorios.</small>

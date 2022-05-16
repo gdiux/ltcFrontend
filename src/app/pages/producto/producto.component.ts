@@ -28,10 +28,12 @@ export class ProductoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.activatedRoute.params
-        .subscribe( ({id}) =>  {
-          this.loadProduct(id);          
-        });
+    // this.activatedRoute.params
+    //     .subscribe( ({id}) =>  {
+    //       this.loadProduct(id);          
+    //     });
+
+    this.loadProduct();
 
   }
 
@@ -39,21 +41,27 @@ export class ProductoComponent implements OnInit {
    *  LOAD PRODUCT ID
   ==================================================================== */
   public product: Product | any;
-  loadProduct(id:string){
+  loadProduct(){
 
-    this.productsService.loadProductId(id)
-        .subscribe( ({product}) => {
+    this.activatedRoute.params
+        .subscribe( ({id}) =>  {      
+        
 
-          this.product = product;
-          
-          this.loadPreventives();
-          this.loadCorrectives();
+          this.productsService.loadProductId(id)
+              .subscribe( ({product}) => {
 
-        }, (err) => {
-          Swal.fire('Error', err.error.msg, 'error');
-          this.router.navigateByUrl('/');
-          
-        });
+                this.product = product;
+                
+                this.loadPreventives();
+                this.loadCorrectives();
+
+              }, (err) => {
+                Swal.fire('Error', err.error.msg, 'error');
+                this.router.navigateByUrl('/');
+                
+              });
+
+      });
 
   }
 
@@ -83,7 +91,6 @@ export class ProductoComponent implements OnInit {
 
     this.correctivesService.loadCorrectivesProduct(this.product.pid, this.estadoCorrective)
         .subscribe( ({ correctives }) => {
-          console.log(correctives);
 
           this.correctives = correctives;
           

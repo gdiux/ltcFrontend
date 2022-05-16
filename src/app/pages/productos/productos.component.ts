@@ -218,7 +218,8 @@ export class ProductosComponent implements OnInit {
     model: [''],
     year: [''],
     estado: ['none'],
-    pid: ['']
+    pid: [''],
+    frecuencia: 3
   });
 
   editProduct(){

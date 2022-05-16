@@ -13,6 +13,7 @@
                 <div class="d-flex flex-column">
                     <p class="mb-2 fw-bolder text-info">PRODUCTO:</p>
                     <h3 class="mb-2 fw-bold fs-2">Codigo: {{ product.code }} </h3>
+                    <p class="mb-2 text-muted">Frecuencia de mantenimiento: {{ product.frecuencia }} meses </p>
 
                     <button *ngIf="product.client?.name" class="text-truncate btn btn-block btn-outline-success btn-sm btn-rounded text-break mb-2" (click)="product = product" type="button" data-toggle="modal" data-target="#client-product" style="max-width: 12rem;">
                         <span data-toggle="tooltip" [title]="product.client.name">

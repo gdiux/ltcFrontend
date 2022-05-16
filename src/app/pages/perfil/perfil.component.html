@@ -25,12 +25,17 @@
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#preventives" role="tab">Preventivos</a>
                 </li>
-                <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Profile</a> </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#correctives" role="tab">Correctivos</a>
+                </li>
                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a> </li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
 
+                <!-- =================================
+                    PREVENTIVES
+                ================================== -->
                 <div class="tab-pane active" id="preventives" role="tabpanel">
 
                     <div class="card-body">
@@ -91,54 +96,81 @@
                         </div>
                     </div>
                 </div>
-                <!--second tab-->
+                <!-- =================================
+                    PREVENTIVES
+                ================================== -->
 
-                <div class="tab-pane" id="profile" role="tabpanel">
+                <!-- =================================
+                    CORRECTIVES
+                ================================== -->
+                <div class="tab-pane" id="correctives" role="tabpanel">
+
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3 col-xs-6 b-r"> <strong>Full Name</strong>
-                                <br>
-                                <p class="text-muted">Johnathan Deo</p>
+                        <div class="d-flex">
+                            <div>
+                                <h4 class="card-title"><span class="lstick bg-danger"></span>Correctivos {{ selectEstadoCorrect.value }}s {{total}}</h4>
                             </div>
-                            <div class="col-md-3 col-xs-6 b-r"> <strong>Mobile</strong>
-                                <br>
-                                <p class="text-muted">(123) 456 7890</p>
-                            </div>
-                            <div class="col-md-3 col-xs-6 b-r"> <strong>Email</strong>
-                                <br>
-                                <p class="text-muted">johnathan@admin.com</p>
-                            </div>
-                            <div class="col-md-3 col-xs-6"> <strong>Location</strong>
-                                <br>
-                                <p class="text-muted">London</p>
+                            <div class="ml-auto">
+                                <select (change)=" estadoCorrective = selectEstadoCorrect.value ; loadCorrectives() " class="custom-select b-0" #selectEstadoCorrect>
+                                    <option value="Pendiente" selected>Pendientes</option>
+                                    <option value="Terminado">Terminados</option>
+                                </select>
                             </div>
                         </div>
-                        <hr>
-                        <p class="m-t-30">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper
-                            nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                            specimen book. It has survived not only five centuries </p>
-                        <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                        <h4 class="font-medium m-t-30">Skill Set</h4>
-                        <hr>
-                        <h5 class="m-t-30">Wordpress <span class="pull-right">80%</span></h5>
-                        <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
-                        </div>
-                        <h5 class="m-t-30">HTML 5 <span class="pull-right">90%</span></h5>
-                        <div class="progress">
-                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
-                        </div>
-                        <h5 class="m-t-30">jQuery <span class="pull-right">50%</span></h5>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
-                        </div>
-                        <h5 class="m-t-30">Photoshop <span class="pull-right">70%</span></h5>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%; height:6px;"> <span class="sr-only">50% Complete</span> </div>
+                        <div class="table-responsive m-t-20">
+                            <table class="table vm no-th-brd no-wrap pro-of-month">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th colspan="2">Creado por</th>
+                                        <th>Cliente</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngIf="correctives.length === 0">
+                                        <td colspan="5">
+                                            <h4 class="mb-0 text-muted text-center"> No tiene ningun correctivo {{ selectEstadoCorrect.value }} ...</h4>
+                                        </td>
+                                    </tr>
+
+                                    <tr *ngFor="let corrective of correctives">
+                                        <td>
+                                            <a [routerLink]="['/dashboard/preventivo', corrective.coid]" class="fw-bold">
+                                                {{ corrective.control }}
+                                            </a>
+                                        </td>
+                                        <td style="width:50px;">
+                                            <span class="round">
+                                                <img [src]=" corrective.create.img | imagen:'user' " alt="user" width="50">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <h6> {{ corrective.create.name }} </h6>
+                                            <small class="text-muted"> {{ corrective.date | date: 'MMMM d Y h:MM:ss a' }}</small>
+                                        </td>
+                                        <td>
+                                            <h6> {{ corrective.client.name }} </h6>
+                                            <small class="text-muted"> {{ corrective.product.serial }} </small>
+                                        </td>
+                                        <td>
+                                            <span class="label label-rounded" [ngClass]="{'label-warning': corrective.estado === 'Pendiente', 'label-success': corrective.estado === 'Terminado'}"> {{ corrective.estado}} </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+
+                <!-- =================================
+                    CORRECTIVES
+                ================================== -->
+
+                <!-- =================================
+                    PERFIL
+                ================================== -->
                 <div class="tab-pane" id="settings" role="tabpanel">
                     <div class="card-body">
                         <form class="form-horizontal form-material" [formGroup]="formUpdate" (ngSubmit)="updateUser()">
@@ -184,6 +216,12 @@
                         </form>
                     </div>
                 </div>
+                <!-- =================================
+                    PERFIL
+                ================================== -->
+
+
+
             </div>
         </div>
     </div>

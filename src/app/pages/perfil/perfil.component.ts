@@ -7,11 +7,12 @@ import Swal from 'sweetalert2';
 // SERVICES
 import { UsersService } from '../../services/users.service';
 import { PreventivesService } from '../../services/preventives.service';
+import { CorrectivesService } from '../../services/correctives.service';
 
 // MODELS
 import { User } from '../../models/users.model';
 import { Preventive } from '../../models/preventives.model';
-import { map, tap } from 'rxjs/operators';
+import { Corrective } from '../../models/correctives.model';
 
 @Component({
   selector: 'app-perfil',
@@ -24,6 +25,7 @@ export class PerfilComponent implements OnInit {
   constructor(  private activatedRoute: ActivatedRoute,
                 private usersService: UsersService,
                 private preventivesServices: PreventivesService,
+                private correctivesService: CorrectivesService,
                 private router: Router,
                 private fb: FormBuilder) { 
                   
@@ -73,6 +75,7 @@ export class PerfilComponent implements OnInit {
           this.getForm;        
 
           this.loadPreventives();
+          this.loadCorrectives();
 
         });
 
@@ -92,6 +95,24 @@ export class PerfilComponent implements OnInit {
           this.total = total;
           this.preventives = preventives;
 
+        });
+
+  }
+
+  /** ================================================================
+   *  CARGAR CORRECTIVOS
+  ==================================================================== */
+  public correctives: Corrective[] = [];
+  public estadoCorrective: any = 'Pendiente';
+  public totalCorrectives: number = 0;
+  loadCorrectives(){
+
+    this.correctivesService.loadCorrectivesStaff(this.user.uid!, this.estadoCorrective)
+        .subscribe( ({ correctives, total }) => {
+          
+          this.totalCorrectives = total;
+          this.correctives = correctives;
+          
         });
 
   }

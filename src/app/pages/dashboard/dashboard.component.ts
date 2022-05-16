@@ -50,22 +50,9 @@ export class DashboardComponent implements OnInit {
         .subscribe(({ products, total }) =>{
 
           this.products = products;
-          this.totalProximos = total;
-
-          this.inProduct = products[0];
-          this.crt = true;
-          
+          this.totalProximos = total;          
 
         });
-  }
-
-  /* ============================================================================ 
-  CREATE PREVENTIVE
-  ============================================================================ */
-  public crt: boolean = false;
-  createPrev(product: any){
-    this.inProduct = product;
-    this.crt = true;
   }
 
   /** ================================================================

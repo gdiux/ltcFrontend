@@ -135,7 +135,7 @@
     <div class="card-body">
         <div class="d-flex">
             <div>
-                <h4 class="card-title"><span class="lstick bg-danger"></span>Correctivos {{ selectEstadoCorrect.value }}s {{total}}</h4>
+                <h4 class="card-title"><span class="lstick bg-danger"></span>Correctivos {{ selectEstadoCorrect.value }}s {{totalCorrectives}}</h4>
             </div>
             <div class="ml-auto">
                 <select (change)=" estadoCorrective = selectEstadoCorrect.value ; loadCorrectives() " class="custom-select b-0" #selectEstadoCorrect>
@@ -164,7 +164,7 @@
 
                     <tr *ngFor="let corrective of correctives">
                         <td>
-                            <a [routerLink]="['/dashboard/preventivo', corrective.coid]" class="fw-bold">
+                            <a [routerLink]="['/dashboard/correctivo', corrective.coid]" class="fw-bold">
                                     {{ corrective.control }}
                                 </a>
                         </td>

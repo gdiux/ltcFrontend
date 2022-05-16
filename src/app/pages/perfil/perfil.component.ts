@@ -54,7 +54,7 @@ export class PerfilComponent implements OnInit {
 
           }else{
             this.loadPreventives();
-            this.getForm;
+            this.getForm();
           }   
           
         });
@@ -72,7 +72,7 @@ export class PerfilComponent implements OnInit {
         .subscribe( ({user}) => {
 
           this.user = user;
-          this.getForm;        
+          this.getForm();        
 
           this.loadPreventives();
           this.loadCorrectives();
@@ -120,9 +120,9 @@ export class PerfilComponent implements OnInit {
   /** ================================================================
    *  GET FORM
   ==================================================================== */
-  get getForm():any{
+  getForm(){
 
-    return this.formUpdate.reset({
+    this.formUpdate.reset({
       usuario: this.user.usuario,
       name: this.user.name,
       password: '',

@@ -28,8 +28,8 @@
                             <button type="button " class="list-group-item list-group-item-action pointer animated fadeIn fast" (click)="selectProduct(product) " data-dismiss="modal ">
                                     <div class="d-flex w-100 justify-content-between ">
                                         <div>
-                                            <h5 class="mb-1 text-break fw-bolder ">{{ product.serial }}</h5>
-                                            <small class="mb-1 text-break fw-bolder text-muted">{{ product.code }}</small>
+                                            <h5 class="mb-1 text-break fw-bolder ">{{ product.code }}</h5>
+                                            <small class="mb-1 text-break fw-bolder text-muted">{{ product.serial }}</small>
                                         </div>
                                         <small> 
                                             <span *ngIf="product.status " class="label label-success "> Activo </span>
@@ -52,10 +52,10 @@
                     <!-- PRODUCT SELECT -->
                     <div *ngIf="productSelect" class="card card-outline-info mt-2 shadow">
                         <div class="card-header">
-                            <h4 class="m-b-0 text-white">Serial: {{ productSelect!.serial }} </h4>
+                            <h4 class="m-b-0 text-white">Codigo: {{ productSelect!.code }} </h4>
                         </div>
                         <div class="card-body">
-                            <h3 class="card-title mb-0"> <i class="mdi mdi-barcode"></i> {{ productSelect!.code }}</h3>
+                            <h3 class="card-title mb-0"> <i class="mdi mdi-barcode"></i> {{ productSelect!.serial }}</h3>
 
                             <ul class="list-group list-group-flush">
 

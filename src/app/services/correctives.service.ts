@@ -51,6 +51,20 @@ export class CorrectivesService {
   }
 
   /** ================================================================
+   *   LOAD PREVENTIVES FOR STAFF /staff/:staff
+  ==================================================================== */
+  loadCorrectivesStaff(id: string, estado: 'Pendiente' | 'Terminado', query: string = ''){
+    return this.http.get<LoadCorrectives>(`${base_url}/correctives/staff/${id}?estado=${estado}&${query}`, this.headers);
+  }
+
+  /** ================================================================
+   *   LOAD PREVENTIVES FOR STAFF /staff/:staff
+  ==================================================================== */
+  loadCorrectivesProduct(id: string, estado: 'Pendiente' | 'Terminado', query: string = ''){
+    return this.http.get<LoadCorrectives>(`${base_url}/correctives/product/${id}?estado=${estado}&${query}`, this.headers);
+  }
+
+  /** ================================================================
    *   CREATE CORRECTIVES
   ==================================================================== */
   createCorrectives(formData: any){

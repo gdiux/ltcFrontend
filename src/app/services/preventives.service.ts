@@ -57,6 +57,14 @@ export class PreventivesService {
   loadPreventivesStaff(id: string, estado: 'Pendiente' | 'Terminado', query: string = ''){
     return this.http.get<LoadPreventives>(`${base_url}/preventives/staff/${id}?estado=${estado}&${query}`, this.headers);
   }
+
+  /** ================================================================
+   *   LOAD PREVENTIVES FOR STAFF /staff/:staff
+  ==================================================================== */
+  loadPreventivesProduct(id: string, estado: 'Pendiente' | 'Terminado', query: string = ''){
+    return this.http.get<LoadPreventives>(`${base_url}/preventives/product/${id}?estado=${estado}&${query}`, this.headers);
+  }
+
   /** ================================================================
    *   CREATE PREVENTIVES
   ==================================================================== */

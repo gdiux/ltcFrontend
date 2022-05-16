@@ -48,6 +48,13 @@ export class ProductsService {
   }
 
   /** ================================================================
+   *   GET PRODUCT ID
+  ==================================================================== */
+  loadProductId(id: string){
+    return this.http.get<{product: Product, ok: boolean}>(`${base_url}/products/${id}`, this.headers);
+  }
+
+  /** ================================================================
    *   CREATE PRODUCTS
   ==================================================================== */
   createProduct( formData: any ){

@@ -26,6 +26,7 @@ import { CreatecorrectivesComponent } from './components/createcorrectives/creat
 import { AssignClientComponent } from './components/assign-client/assign-client.component';
 import { PreventivoComponent } from './preventivo/preventivo.component';
 import { CorrectivoComponent } from './correctivo/correctivo.component';
+import { ProductoComponent } from './producto/producto.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CorrectivoComponent } from './correctivo/correctivo.component';
     CreatecorrectivesComponent,
     AssignClientComponent,
     PreventivoComponent,
-    CorrectivoComponent
+    CorrectivoComponent,
+    ProductoComponent
   ],
   exports:[
     DashboardComponent,

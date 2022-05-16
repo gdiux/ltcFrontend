@@ -62,7 +62,11 @@
 
                             <tr *ngFor="let product of products">
 
-                                <td> {{ product.code }} </td>
+                                <td>
+                                    <a [routerLink]="['/dashboard/producto', product.pid]">
+                                        {{ product.code }}
+                                    </a>
+                                </td>
                                 <td> {{ product.serial }} </td>
                                 <td> {{ product.model }} </td>
                                 <!-- mdi-account-plus -->

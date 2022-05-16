@@ -83,6 +83,16 @@
 </div>
 <!-- CONTROL - CLIENT -->
 
+<div class="card bg-danger p-3 text-center text-white text-break shadow animated pulse x5 ">
+    <h4 class="mb-0 fw-bold text-white">Descripción</h4>
+    <p> {{ corrective?.description }} </p>
+    <footer>
+        <small>
+            por: <cite title="Source Title"> {{ corrective?.create.name }} </cite>
+        </small>
+    </footer>
+</div>
+
 <div class="d-flex flex-row flex-wrap gap-2">
 
     <!-- INFO PRODUCT -->
@@ -97,7 +107,7 @@
 
                 <div>
                     <p class="mb-2 fw-bolder text-info">PRODUCTO:</p>
-                    <h3 class="mb-2 fw-bold fs-2">Serial: {{ corrective?.product.serial }} </h3>
+                    <h3 class="mb-2 fw-bold fs-2">Codigo: {{ corrective?.product.code }} </h3>
                     <button type="button" class="btn waves-effect waves-light btn-rounded btn-sm btn-outline-primary">Proximo mantenimiento</button>
                 </div>
 
@@ -105,9 +115,9 @@
 
             <div class="row">
 
-                <div class="col-md-3 col-xs-6 b-r"> <strong class="fw-bold">Codigo</strong>
+                <div class="col-md-3 col-xs-6 b-r"> <strong class="fw-bold">Serial</strong>
                     <br>
-                    <p class="text-muted">{{ corrective?.product.code }}</p>
+                    <p class="text-muted">{{ corrective?.product.serial }}</p>
                 </div>
 
                 <div class="col-md-3 col-xs-6 b-r"> <strong class="fw-bold">Marca</strong>
@@ -252,13 +262,13 @@
                 </div> -->
 
                 <div class="card">
-                    <img class="card-img-top img-responsive" [src]="item.img | imagen:'preventives' " alt="Card image cap">
+                    <img class="card-img-top img-responsive" [src]="item.img | imagen:'correctives' " alt="Card image cap">
                     <div class="card-body">
                         <p class="mb-0">fecha: {{ item.date | date: 'MMMM d y hh:mm:ss a' }}</p>
                         <ul class="list-inline font-14">
 
                             <li>
-                                <a [href]="item.img | imagen:'preventives'" class="link" target="_blank">
+                                <a [href]="item.img | imagen:'correctives'" class="link" target="_blank">
                                     <i class="mdi mdi-download"></i> Descargar
                                 </a>
                             </li>

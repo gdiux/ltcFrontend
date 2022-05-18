@@ -201,7 +201,8 @@ export class ProductosComponent implements OnInit {
       model: product.model,
       year: product.year,
       estado: product.estado,
-      pid: product.pid
+      pid: product.pid,
+      frecuencia: product.frecuencia
     });
 
   }

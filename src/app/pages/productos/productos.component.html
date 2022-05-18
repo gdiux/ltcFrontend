@@ -79,7 +79,7 @@
                                         </span>
                                     </button>
 
-                                    <button *ngIf="!product.client?.name && product.estado != 'Instalada'" (click)="productC = product" type="button" class="btn btn-sm btn-icon btn-pure btn-info delete-row-btn text-break" data-toggle="modal" data-target="#client-product">
+                                    <button *ngIf="!product.client?.name" (click)="productC = product" type="button" class="btn btn-sm btn-icon btn-pure btn-info delete-row-btn text-break" data-toggle="modal" data-target="#client-product">
                                         <i class="mdi mdi-account-plus" aria-hidden="true"></i>
                                     </button>
                                 </td>

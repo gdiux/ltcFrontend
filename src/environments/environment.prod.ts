@@ -1,4 +1,8 @@
+// DOMAIN
+// https://admin.lineatecnologicadecolombia.com/api
+// LOCAL
+// http://localhost:3000/api
 export const environment = {
   production: true,
-  base_url: 'http://192.168.1.150:3000/api'
+  base_url: 'http://localhost:3000/api'
 };

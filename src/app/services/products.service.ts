@@ -55,6 +55,13 @@ export class ProductsService {
   }
 
   /** ================================================================
+   *   GET PRODUCTS OF CLIENTS
+  ==================================================================== */
+  loadProductsClient(client: string){
+    return this.http.get<{ products: Product[], ok: boolean }>(`${base_url}/products/client/${client}`, this.headers);
+  }
+
+  /** ================================================================
    *   CREATE PRODUCTS
   ==================================================================== */
   createProduct( formData: any ){

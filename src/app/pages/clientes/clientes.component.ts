@@ -5,10 +5,12 @@ import Swal from 'sweetalert2';
 
 // MODELS
 import { Client } from '../../models/clients.model';
+import { Product } from 'src/app/models/products.model';
 
 // SERVICES
 import { ClientsService } from '../../services/clients.service';
 import { SearchService } from '../../services/search.service';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-clientes',
@@ -20,7 +22,8 @@ export class ClientesComponent implements OnInit {
 
   constructor(  private clientsService: ClientsService,
                 private searchService: SearchService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder,
+                private productsService: ProductsService) { }
 
   ngOnInit(): void {
     
@@ -252,6 +255,38 @@ export class ClientesComponent implements OnInit {
     }else{
       return false;
     }
+
+  }
+
+  /** ======================================================================
+   * LOAD PRODUCTS CLIENTS
+  ====================================================================== */
+  public PorductsClient: Product[] = [];
+  public clientSelected!: Client;
+  public cargandoProductos: boolean = false;
+  public totalProductsClient: number = 0;
+  loadProductsClient( client: Client ){
+
+    this.cargandoProductos = true;
+    this.PorductsClient = [];
+    this.clientSelected = client;
+    
+    
+    this.productsService.loadProductsClient(client.cid!)
+    .subscribe( ({products}) => {
+
+          this.cargandoProductos = false;
+          this.PorductsClient = products;
+          this.totalProductsClient = products.length;       
+          
+        }, (err) => {
+          console.log(err);
+          this.totalProductsClient = 0;
+          this.PorductsClient = [];
+          this.cargandoProductos = false;
+          Swal.fire('Error', err.error.msg, 'error');
+          
+        });
 
   }
   

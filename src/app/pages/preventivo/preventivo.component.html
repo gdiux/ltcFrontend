@@ -214,7 +214,7 @@
             <div class="dropify-errors-container">
                 <ul></ul>
             </div>
-            <input #fileImgBef type="file" id="input-file-now" class="dropify" (change)="cambiarImage($event.target, 'before')">
+            <input #fileImgBef type="file" id="input-file-now" capture="camera" class="dropify" (change)="cambiarImage($event.target, 'before')">
             <button type="button" class="dropify-clear">Remove</button>
             <div class="dropify-preview" [ngClass]="{'d-block': imgTempBef}">
 

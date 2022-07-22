@@ -244,10 +244,7 @@ export class PreventivoComponent implements OnInit {
     
     this.fileUploadService.updateImage( this.subirImagen, 'preventives', this.preventive.preid!, desc)
     .then( img => {
-
-      console.log(img);
       
-
       if (desc === 'imgBef') {
         this.preventive.imgBef?.push({
           img: img.nombreArchivo,

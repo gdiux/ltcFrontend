@@ -28,6 +28,8 @@ import { PreventivoComponent } from './preventivo/preventivo.component';
 import { CorrectivoComponent } from './correctivo/correctivo.component';
 import { ProductoComponent } from './producto/producto.component';
 import { CardsComponent } from './dashboard/components/cards/cards.component';
+import { AbonadosComponent } from './abonados/abonados.component';
+import { AbonadoComponent } from './abonado/abonado.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { CardsComponent } from './dashboard/components/cards/cards.component';
     PreventivoComponent,
     CorrectivoComponent,
     ProductoComponent,
-    CardsComponent
+    CardsComponent,
+    AbonadosComponent,
+    AbonadoComponent
   ],
   exports:[
     DashboardComponent,

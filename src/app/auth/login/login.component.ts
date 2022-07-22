@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
 
           if (resp === false) {
             Swal.fire('Atención', 'Credenciales incorrectas, porfavor verificar el usuario o contraseña', 'warning')
+            return;
           }          
 
           if ( this.loginForm.value.remember ) {

@@ -16,6 +16,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { PreventivoComponent } from './preventivo/preventivo.component';
 import { CorrectivoComponent } from './correctivo/correctivo.component';
 import { ProductoComponent } from './producto/producto.component';
+import { AbonadosComponent } from './abonados/abonados.component';
+import { AbonadoComponent } from './abonado/abonado.component';
 
 
 // COMPONENTS
@@ -29,6 +31,8 @@ const routes: Routes = [
         children:
         [
           { path: '', component: DashboardComponent, data:{ title: 'Dashboard' } },
+          { path: 'abonado/:id', component: AbonadoComponent, data:{ title: 'Abonado' } },
+          { path: 'abonados', component: AbonadosComponent, data:{ title: 'Abonados' } },
           { path: 'clientes', component: ClientesComponent, data:{ title: 'Clientes' } },
           { path: 'correctivos', component: CorrectivosComponent, data:{ title: 'Correctivos' } },
           { path: 'correctivo/:id', component: CorrectivoComponent, data:{ title: 'Correctivo' } },

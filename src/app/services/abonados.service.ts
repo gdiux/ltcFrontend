@@ -52,26 +52,41 @@ export class AbonadosService {
   }
 
   /** ================================================================
-   *  LOAD USER BY ID /abonado/:id'
+   *  LOAD ABONADO BY ID /abonado/:id'
   ==================================================================== */
   loadAbonadoId(id: string){
     return this.http.get<{ok: boolean, abonado: Abonado}>(`${base_url}/abonados/abonado/${id}`, this.headers);
   }
 
-
   /** ================================================================
-   *  CREATE USER
+   *  CREATE ABONADO
   ==================================================================== */
   createAbonado( formaData: any ){
     return this.http.post<{abonado: Abonado, ok: boolean}>(`${base_url}/abonados`, formaData, this.headers);
   }
 
   /** ================================================================
-   *  UPDATE USER
+   *  ADD CLIENT ABONADO
+  ==================================================================== */
+  addClientAbonado( client: string, id: string ){
+    return this.http.post<{abonado: Abonado, ok: boolean}>(`${base_url}/abonados/add/${client}/${id}`, '', this.headers);
+  }
+
+  /** ================================================================
+   *  DEL CLIENT ABONADO
+  ==================================================================== */
+  delClientAbonado(client: string, id: string){
+    return this.http.delete<{abonado: Abonado, ok: boolean}>(`${base_url}/abonados/del/${client}/${id}`, this.headers);
+  }
+  
+  /** ================================================================
+   *  UPDATE ABONADO
   ==================================================================== */
   updateAbonado( formData: any, id: string ){
     return this.http.put< { abonado: Abonado, ok: boolean } >(`${base_url}/abonados/${id}`, formData, this.headers);
   }
+
+
 
 
   // FIN DE LA CLASE

@@ -76,7 +76,7 @@ export class CorrectivosComponent implements OnInit {
       return;
     }
     
-    this.searchService.search('preventives', termino, query)
+    this.searchService.search('correctives', termino, query)
         .subscribe( ({resultados}) => {
 
           this.correctives = resultados;

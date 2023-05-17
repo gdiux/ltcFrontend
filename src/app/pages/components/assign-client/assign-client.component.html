@@ -39,6 +39,14 @@ MODAL ADD CLIENT
 
                 </div>
 
+                <div class="form-inline gap-2">
+                    <div class="form-group mb-2">
+                        <label for="ubicacion" class="sr-only">Ubicación</label>
+                        <input type="text" class="form-control" id="ubicacion" placeholder="Ubicación" #ubicacion>
+                    </div>
+                    <button (click)="updateUbicacion(ubicacion.value)" type="button" class="btn btn-primary mb-2">Actualizar</button>
+                </div>
+
                 <div class="container">
 
                     <p class="mb-0 text-muted mt-3">
@@ -69,6 +77,9 @@ MODAL ADD CLIENT
                                 </li>
                                 <li *ngIf="productC?.client" class="list-group-item">
                                     <span class="font-weight-bold"> Cliente: </span> {{ productC?.client.name }}
+                                </li>
+                                <li *ngIf="productC?.ubicacion" class="list-group-item">
+                                    <span class="font-weight-bold"> Ubicación: </span> {{ productC?.ubicacion }}
                                 </li>
 
                             </ul>

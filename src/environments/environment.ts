@@ -3,13 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 // DOMAIN
-// https://admin.lineatecnologicadecolombia.com/api
-// LOCAL
-// http://localhost:3000/api
+/**
+ * base_url: 'https://soporte.castitoner.com/api'
+ * base_url: 'https://admin.lineatecnologicadecolombia.com/api'
+ * base_url: 'http://localhost:3000/api'
+ */
 
 export const environment = {
   production: false,
-  base_url: 'https://admin.lineatecnologicadecolombia.com/api'
+  base_url: 'https://soporte.castitoner.com/api'
 };
 
 /*

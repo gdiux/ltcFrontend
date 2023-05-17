@@ -54,8 +54,7 @@ export class AssignClientComponent implements OnInit {
 
   /** ======================================================================
    * ASSIGN CLIENTS
-  ====================================================================== */
-  
+  ====================================================================== */  
   assignClient(client: any, estado: 'Instalada' | 'Mantenimiento' | 'Disponible'){
   
     let body = {
@@ -75,6 +74,33 @@ export class AssignClientComponent implements OnInit {
 
         }, (err) => { Swal.fire('Error', err.error.msg, 'error') });
     
+
+  }
+
+  /** ======================================================================
+   * GUARDAR UBICACION
+  ====================================================================== */ 
+  updateUbicacion(ubicacion: string){
+
+    if (ubicacion.length === 0) {
+      Swal.fire('Atención', 'Debes de agregar una ubicación para actualizar', 'warning');
+      return;
+    }
+
+    let body = {
+      ubicacion
+    };
+
+    this.productsService.updateClientProduct(this.productC.pid! , body)
+        .subscribe( ({product}) => {
+
+          this.actualizar.emit(product);
+          
+
+          // this.loadProducts();
+          Swal.fire('Estupendo', 'Se ha actualizado la ubicacion exitosamente!', 'success');
+
+        }, (err) => { Swal.fire('Error', err.error.msg, 'error') });
 
   }
 

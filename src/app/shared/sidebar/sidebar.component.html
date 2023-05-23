@@ -15,7 +15,7 @@
                     </a>
 
                     <ul aria-expanded="false" class="collapse">
-                        <li><a [routerLink]="['/dashboard/perfil', user.uid]">Mi Perfil </a></li>
+                        <li><a [routerLink]="['/dashboard/perfil', user.uid]" routerLinkActive="active">Mi Perfil </a></li>
                     </ul>
 
                 </li>
@@ -30,29 +30,32 @@
                     </a>
 
                     <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="/">Dashboard </a></li>
+                        <li><a [routerLink]="['/dashboard']" routerLinkActive="active">Dashboard </a></li>
                         <li><a routerLinkActive="active" [routerLink]="['/dashboard/abonados']">Abonados </a></li>
                         <li><a routerLinkActive="active" [routerLink]="['/dashboard/clientes']">Clientes </a></li>
                         <li><a routerLinkActive="active" [routerLink]="['/dashboard/usuarios']">Usuarios </a></li>
-                    </ul>
-
-
-                </li>
-
-                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Productos</span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a [routerLink]="['/dashboard/productos']">Productos</a></li>
                     </ul>
                 </li>
 
                 <li>
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="mdi mdi-file"></i><span class="hide-menu">Mantenimientos</span></a>
+                        <i class="mdi mdi-bullseye"></i>
+                        <span class="hide-menu">Productos</span>
+                    </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a [routerLink]="['/dashboard/preventivos']">Preventivos</a></li>
+                        <li><a [routerLink]="['/dashboard/productos']" routerLinkActive="active">Productos</a></li>
+                        <li><a [routerLink]="['/dashboard/prefixes']" routerLinkActive="active">Prefijos</a></li>
                     </ul>
+                </li>
+
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="mdi mdi-file"></i>
+                        <span class="hide-menu">Mantenimientos</span>
+                    </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a [routerLink]="['/dashboard/correctivos']">Correctivos</a></li>
+                        <li><a [routerLink]="['/dashboard/preventivos']" routerLinkActive="active">Preventivos</a></li>
+                        <li><a [routerLink]="['/dashboard/correctivos']" routerLinkActive="active">Correctivos</a></li>
                     </ul>
                 </li>
 

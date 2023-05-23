@@ -10,6 +10,8 @@ import { SearchService } from '../../services/search.service';
 // MODELS
 import { Product } from '../../models/products.model';
 import { Client } from '../../models/clients.model';
+import { PrefixesService } from 'src/app/services/prefixes.service';
+import { Prefix } from 'src/app/models/prefix.model';
 
 
 @Component({
@@ -21,14 +23,69 @@ import { Client } from '../../models/clients.model';
 export class ProductosComponent implements OnInit {
   
   constructor(  private productsService: ProductsService,
+                private prefixesService: PrefixesService,
                 private searchService: SearchService,
                 private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.loadProducts();    
+    this.loadProducts();
+    this.loadPrefixes();
   }
 
-  
+  /** ======================================================================
+   * LOAD PREFIXES
+  ====================================================================== */
+  public prefixes: Prefix[] = [];
+  loadPrefixes(){
+
+    this.prefixesService.loadPrefixes()
+        .subscribe( ({prefixes}) => {
+          this.prefixes = prefixes;
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
+  }
+
+  /** ======================================================================
+   * TOTAL DEL PREFIJO SELECCIONADO
+  ====================================================================== */
+  public prefixSelect: string = '';
+  countPrefix(prefix: string){
+
+    if (prefix.length === 0) {
+      this.prefixSelect = '';
+      return; 
+    }
+
+    this.productsService.loadProductsPrefix(prefix)
+        .subscribe( ({total}) => {
+
+          if (total <= 9) {
+            this.prefixSelect = `${prefix}000${total.toString()}`;
+            this.newProductForm.reset({ code:  this.prefixSelect});
+          }else if( total >= 10 && total <= 99 ){
+            this.prefixSelect = `${prefix}00${total.toString()}`;
+          }else if( total >= 100 && total <= 999 ){
+            this.prefixSelect = `${prefix}0${total.toString()}`;
+          }else{
+            this.prefixSelect = `${prefix}${total.toString()}`;
+          }
+
+          this.newProductForm.reset({ 
+            code:       this.prefixSelect,
+            prefix:     prefix,
+            estado:     this.newProductForm.value.estado || 'none',
+            frecuencia: this.newProductForm.value.frecuencia || 3,
+          });
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+          
+        })
+
+  }
 
   /** ======================================================================
    * ASSIGN CLIENTS
@@ -52,7 +109,7 @@ export class ProductosComponent implements OnInit {
   loadProducts(){
 
     this.cargando = true;
-    this.sinResultados = false;           
+    this.sinResultados = false;       
 
     this.productsService.loadProducts(this.desde, this.limite)
         .subscribe( ({products, total}) => {  
@@ -78,6 +135,7 @@ export class ProductosComponent implements OnInit {
   public savingNew: boolean = false;
   public newProductSubmitted: boolean = false;
   public newProductForm = this.fb.group({
+    prefix: ['', [Validators.required]],
     code: ['', [Validators.required]],
     serial: ['', [Validators.required]],
     brand: [''],
@@ -104,6 +162,7 @@ export class ProductosComponent implements OnInit {
           this.total ++;
           this.newProductSubmitted = false;
           this.newProductForm.reset({
+            prefix: '',
             estado: ['none'],
             frecuencia: 3
           });
@@ -195,6 +254,7 @@ export class ProductosComponent implements OnInit {
   selectProduct(product: Product){
 
     this.editProductForm.reset({
+      prefix: product.prefix || '',
       code: product.code,
       serial: product.serial,
       brand: product.brand,
@@ -213,6 +273,7 @@ export class ProductosComponent implements OnInit {
   public savingEdit: boolean = false;
   public editProductSubmitted: boolean = false;
   public editProductForm = this.fb.group({
+    prefix: ['', [Validators.required]],
     code: ['', [Validators.required]],
     serial: ['', [Validators.required]],
     brand: [''],

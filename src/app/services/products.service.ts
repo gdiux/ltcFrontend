@@ -62,6 +62,13 @@ export class ProductsService {
   }
 
   /** ================================================================
+   *   GET COUNT PRODUCTS PREFIX
+  ==================================================================== */
+  loadProductsPrefix(prefix: string){
+    return this.http.get<{ total: number, ok: boolean }>(`${base_url}/products/count/${prefix}`, this.headers);
+  }
+
+  /** ================================================================
    *   CREATE PRODUCTS
   ==================================================================== */
   createProduct( formData: any ){

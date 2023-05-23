@@ -30,6 +30,7 @@ import { ProductoComponent } from './producto/producto.component';
 import { CardsComponent } from './dashboard/components/cards/cards.component';
 import { AbonadosComponent } from './abonados/abonados.component';
 import { AbonadoComponent } from './abonado/abonado.component';
+import { PrefixesComponent } from './prefixes/prefixes.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AbonadoComponent } from './abonado/abonado.component';
     ProductoComponent,
     CardsComponent,
     AbonadosComponent,
-    AbonadoComponent
+    AbonadoComponent,
+    PrefixesComponent
   ],
   exports:[
     DashboardComponent,

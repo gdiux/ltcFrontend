@@ -142,6 +142,17 @@ MODAL AGREGAR PRODUCT
                     <div class="form-group has-danger">
 
                         <div class="col-md-12 m-b-20">
+                            <label for="frecuencia"> Seleccionar Prefijo</label>
+                            <select formControlName="prefix" class="form-control" id="frecuencia" (change)="countPrefix(prefixS.value)" #prefixS>
+                                <option value="" selected >Seleccionar Prefijo</option>
+                                <option *ngFor="let prefijo of prefixes" [value]="prefijo.name" > {{ prefijo.name }} </option>
+                            </select>
+                            <div *ngIf="validateNewForm('prefix')" class="form-control-feedback">
+                                <small> El prefijo es obligatorio </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 m-b-20">
                             <input formControlName="code" type="text" class="form-control" placeholder="Codigo **">
                             <div *ngIf="validateNewForm('code')" class="form-control-feedback">
                                 <small> El codigo es obligatorio </small>
@@ -222,7 +233,20 @@ MODAL EDITAR PRODUCT
 
                 <form class="form-horizontal form-material" autocomplete="off" [formGroup]="editProductForm" (ngSubmit)="editProduct()">
 
+
+
                     <div class="form-group has-danger">
+
+                        <div class="col-md-12 m-b-20">
+                            <label for="prefijoUpdate"> Seleccionar Prefijo</label>
+                            <select formControlName="prefix" class="form-control" id="prefijoUpdate">
+                                <option value="" selected >Seleccionar Prefijo</option>
+                                <option *ngFor="let prefijo of prefixes" [value]="prefijo.name" > {{ prefijo.name }} </option>
+                            </select>
+                            <div *ngIf="validateEditForm('prefix')" class="form-control-feedback">
+                                <small> El prefijo es obligatorio </small>
+                            </div>
+                        </div>
 
                         <div class="col-md-12 m-b-20">
                             <input formControlName="code" type="text" class="form-control" placeholder="Codigo **">

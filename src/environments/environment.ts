@@ -2,7 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-// DOMAIN
+// DOMAINS
 /**
  * base_url: 'https://soporte.castitoner.com/api'
  * base_url: 'https://admin.lineatecnologicadecolombia.com/api'

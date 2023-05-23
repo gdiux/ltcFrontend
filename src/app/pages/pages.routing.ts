@@ -18,6 +18,7 @@ import { CorrectivoComponent } from './correctivo/correctivo.component';
 import { ProductoComponent } from './producto/producto.component';
 import { AbonadosComponent } from './abonados/abonados.component';
 import { AbonadoComponent } from './abonado/abonado.component';
+import { PrefixesComponent } from './prefixes/prefixes.component';
 
 
 // COMPONENTS
@@ -36,6 +37,7 @@ const routes: Routes = [
           { path: 'clientes', component: ClientesComponent, data:{ title: 'Clientes' } },
           { path: 'correctivos', component: CorrectivosComponent, data:{ title: 'Correctivos' } },
           { path: 'correctivo/:id', component: CorrectivoComponent, data:{ title: 'Correctivo' } },
+          { path: 'prefixes', component: PrefixesComponent, data:{ title: 'Prefijos' } },
           { path: 'preventivos', component: PreventivosComponent, data:{ title: 'Preventivos' } },
           { path: 'preventivo/:id', component: PreventivoComponent, data:{ title: 'Preventivo' } },
           { path: 'productos', component: ProductosComponent, data:{ title: 'Productos' } },

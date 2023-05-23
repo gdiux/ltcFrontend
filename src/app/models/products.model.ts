@@ -1,6 +1,7 @@
 export class Product{
 
     constructor(
+        public prefix:        string,
         public code:        string,
         public serial:      string,
         public estado?:     'Disponible' | 'Mantenimiento' | 'Instalada',

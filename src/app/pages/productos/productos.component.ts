@@ -88,6 +88,42 @@ export class ProductosComponent implements OnInit {
   }
 
   /** ======================================================================
+   * TOTAL DEL PREFIJO SELECCIONADO UPDATE
+  ====================================================================== */
+  @ViewChild('codigoUpdate') codigoUpdate!: ElementRef;
+  countPrefixUp(prefix: string){
+
+    let prefixUp = '';
+
+    if (prefix.length === 0) {
+      prefixUp = '';
+      return; 
+    }
+
+    this.productsService.loadProductsPrefix(prefix)
+        .subscribe( ({total}) => {
+
+          if (total <= 9) {
+            prefixUp = `${prefix}000${total.toString()}`;
+          }else if( total >= 10 && total <= 99 ){
+            prefixUp = `${prefix}00${total.toString()}`;
+          }else if( total >= 100 && total <= 999 ){
+            prefixUp = `${prefix}0${total.toString()}`;
+          }else{
+            prefixUp = `${prefix}${total.toString()}`;
+          }
+
+          this.codigoUpdate.nativeElement.value = prefixUp;
+                    
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+          
+        })
+
+  }
+
+  /** ======================================================================
    * ASSIGN CLIENTS
   ====================================================================== */
   public productC!: Product;

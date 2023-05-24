@@ -239,7 +239,7 @@ MODAL EDITAR PRODUCT
 
                         <div class="col-md-12 m-b-20">
                             <label for="prefijoUpdate"> Seleccionar Prefijo</label>
-                            <select formControlName="prefix" class="form-control" id="prefijoUpdate">
+                            <select (change)="countPrefixUp(prefixSS.value)" #prefixSS formControlName="prefix" class="form-control" id="prefijoUpdate">
                                 <option value="" selected >Seleccionar Prefijo</option>
                                 <option *ngFor="let prefijo of prefixes" [value]="prefijo.name" > {{ prefijo.name }} </option>
                             </select>
@@ -249,7 +249,7 @@ MODAL EDITAR PRODUCT
                         </div>
 
                         <div class="col-md-12 m-b-20">
-                            <input formControlName="code" type="text" class="form-control" placeholder="Codigo **">
+                            <input formControlName="code" type="text" class="form-control" placeholder="Codigo **" #codigoUpdate>
                             <div *ngIf="validateEditForm('code')" class="form-control-feedback">
                                 <small> El codigo es obligatorio </small>
                             </div>

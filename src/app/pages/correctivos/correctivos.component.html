@@ -95,23 +95,42 @@
                             <ng-container *ngIf="correctives.length > 0">
 
                                 <tr *ngFor="let corrective of correctives">
-                                    <td>
+                                    <td class="align-middle">
                                         <a [routerLink]="['/dashboard/correctivo', corrective.coid ]" class="text-decoration-none text-info pointer">
                                             {{ corrective.control }} 
                                         </a>
                                     </td>
-                                    <td> {{ corrective.product.code }} </td>
-                                    <td> {{ corrective.staff.name }} </td>
-                                    <td data-toggle="tooltip" data-placement="top" title="{{corrective.client.name}}" data-original-title="Tooltip on top">
+                                    <td class="align-middle"> {{ corrective.product.code }} </td>
+                                    <td class="align-middle"> {{ corrective.staff.name }} </td>
+                                    <td class="align-middle" data-toggle="tooltip" data-placement="top" title="{{corrective.client.name}}" data-original-title="Tooltip on top">
                                         {{ corrective.client.name }}
                                     </td>
-                                    <td>
+                                    <td class="align-middle">
                                         <span *ngIf="!corrective.status" class="label label-danger"> Eliminado </span>
                                         <span *ngIf="corrective.status && corrective.estado == 'Pendiente'" class="label label-warning"> {{ corrective.estado }} </span>
                                         <span *ngIf="corrective.status && corrective.estado == 'Terminado'" class="label label-success"> {{ corrective.estado }} </span>
                                     </td>
-                                    <td> {{ corrective.date | date:'medium' }} </td>
-                                    <td>
+                                    <td class="align-middle">
+
+                                        <p *ngIf="!corrective.checkin" class="mb-0 text-muted">
+                                            <small>
+                                                {{ corrective.date | date:'short' }} 
+                                            </small>
+                                        </p>
+
+                                        <p *ngIf="corrective.checkin" class="mb-0 text-success">
+                                            <small>
+                                                {{ corrective.checkin | date:'short' }} 
+                                            </small>
+                                        </p>
+
+                                        <p *ngIf="corrective.checkout" class="mb-0 text-danger">
+                                            <small>
+                                                {{ corrective.checkin | date:'medium' }} 
+                                            </small>
+                                        </p>
+                                    </td>
+                                    <td class="align-middle">
 
                                         <a [routerLink]="['/dashboard/correctivo', corrective.coid ]" class="text-decoration-none text-info pointer">
                                             <i class="mdi mdi-call-made"></i>

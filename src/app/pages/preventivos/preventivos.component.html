@@ -95,23 +95,41 @@
                             <ng-container *ngIf="preventives.length > 0">
 
                                 <tr *ngFor="let preventive of preventives">
-                                    <td>
+                                    <td class="align-middle">
                                         <a [routerLink]="['/dashboard/preventivo', preventive.preid ]" class="text-decoration-none text-info pointer">
                                             {{ preventive.control }} 
                                         </a>
                                     </td>
-                                    <td> {{ preventive.product.code }} </td>
-                                    <td> {{ preventive.staff.name }} </td>
-                                    <td data-toggle="tooltip" data-placement="top" title="{{preventive.client.name}}" data-original-title="Tooltip on top">
+                                    <td class="align-middle"> {{ preventive.product.code }} </td>
+                                    <td class="align-middle"> {{ preventive.staff.name }} </td>
+                                    <td class="align-middle" data-toggle="tooltip" data-placement="top" title="{{preventive.client.name}}" data-original-title="Tooltip on top">
                                         {{ preventive.client.name }}
                                     </td>
-                                    <td>
+                                    <td class="align-middle">
                                         <span *ngIf="!preventive.status" class="label label-danger"> Eliminado </span>
                                         <span *ngIf="preventive.status && preventive.estado == 'Pendiente'" class="label label-warning"> {{ preventive.estado }} </span>
                                         <span *ngIf="preventive.status && preventive.estado == 'Terminado'" class="label label-success"> {{ preventive.estado }} </span>
                                     </td>
-                                    <td> {{ preventive.date | date:'medium' }} </td>
-                                    <td>
+                                    <td class="align-middle">
+                                        <p *ngIf="!preventive.checkin" class="mb-0 text-muted">
+                                            <small>
+                                                {{ preventive.date | date:'short' }} 
+                                            </small>
+                                        </p>
+
+                                        <p *ngIf="preventive.checkin" class="mb-0 text-success">
+                                            <small>
+                                                {{ preventive.checkin | date:'short' }} 
+                                            </small>
+                                        </p>
+
+                                        <p *ngIf="preventive.checkout" class="mb-0 text-danger">
+                                            <small>
+                                                {{ preventive.checkin | date:'medium' }} 
+                                            </small>
+                                        </p>
+                                    </td>
+                                    <td class="align-middle">
 
                                         <a [routerLink]="['/dashboard/preventivo', preventive.preid ]" class="text-decoration-none text-info pointer">
                                             <i class="mdi mdi-call-made"></i>

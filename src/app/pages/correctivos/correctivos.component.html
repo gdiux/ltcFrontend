@@ -47,7 +47,7 @@
                 <!-- SEARCH BTN NEW -->
                 <div class="d-flex justify-content-between flex-wrap mt-1">
                     <div class="my-2">
-                        <input type="text" id="demo-input-search2" placeholder="Buscar Correctivos" (keyup)="search(buscador.value)" class="form-control m-0" #buscador>
+                        <input type="text" id="demo-input-search2" placeholder="Buscar Correctivos" (keyup)="search(buscador.value)" (keyup.enter)="search(buscador.value)" class="form-control m-0" #buscador>
                         <small *ngIf="resultados > 0" class="text-muted animated fadeIn">Resultados: {{resultados}}</small>
                     </div>
 

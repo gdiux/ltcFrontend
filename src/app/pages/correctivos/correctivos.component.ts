@@ -116,7 +116,7 @@ export class CorrectivosComponent implements OnInit {
   limiteChange( cantidad: any ){    
 
     this.limite = Number(cantidad);
-    this.loadCorrectives;
+    this.loadCorrectives();
 
   }
 

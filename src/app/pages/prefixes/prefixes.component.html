@@ -103,12 +103,14 @@ MODAL EDITAR PREFIJO
             </div>
             <div class="modal-body">
 
-                <div class="form-group" *ngIf="prefixSelect">
-                    <div class="col-md-12 m-b-20">
-                        <input type="text" class="form-control" placeholder="Nombre" [value]="prefixSelect.name" #prefijoIn>
+                <div *ngIf="prefixSelect">
+                    <div class="form-group">
+                        <div class="col-md-12 m-b-20">
+                            <input type="text" class="form-control" placeholder="Nombre" [value]="prefixSelect.name" #prefijoIn>
+                        </div>
                     </div>
+                    <button type="button" (click)="updatePrefix(prefijoIn.value)" class="btn btn-info waves-effect btn-block">Actualizar</button>
                 </div>
-                <button type="button" class="btn btn-info waves-effect btn-block">Actualizar</button>
 
             </div>
             <div class="modal-footer">

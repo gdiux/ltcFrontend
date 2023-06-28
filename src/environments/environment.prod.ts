@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  base_url: 'https://soporte.castitoner.com/api'
+  base_url: 'https://admin.lineatecnologicadecolombia.com/api'
 };

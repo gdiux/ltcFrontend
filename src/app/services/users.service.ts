@@ -135,6 +135,13 @@ export class UsersService {
     return this.http.put< { user: User, ok: boolean } >(`${base_url}/users/${id}`, formData, this.headers);
   }
 
+  /** ================================================================
+   *  DELETE USER
+  ==================================================================== */
+  deleteUser( id: string ){
+    return this.http.delete< { user: User, ok: boolean } >(`${base_url}/users/${id}`, this.headers);
+  }
+
 
 
 

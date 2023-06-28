@@ -108,5 +108,53 @@ export class UsuariosComponent implements OnInit {
 
   }
 
+  /** ======================================================================
+   * DESACTIVAR O ACTIVAR USUARIOS
+  ====================================================================== */
+  desactiveUser(user: User){
+
+    let texto;
+
+    if (user.status) {
+      texto = `desactivar`;
+    }else{
+      texto = `reactivar`;      
+    }
+
+    Swal.fire({
+      title: 'Atención!',
+      text: `Estas seguro de ${texto} este usuario`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Si, ${texto}`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.usersService.deleteUser(user.uid!)
+            .subscribe( ({user}) => {
+
+              let respT;
+              if (user.status) {
+                respT = `activado`;
+              }else{
+                respT = `desactivado`;      
+              }
+
+              this.loadUsers();
+              Swal.fire('Estupendo', `El usuario a sido ${respT} con exito!`)
+
+            }, (err) => {
+              console.log(err);
+              Swal.fire('Error', err.error.msg, 'error');
+              
+            });
+
+      }
+    })
+
+  }
+
   // FIN DE LA CLASE
 }

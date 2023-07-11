@@ -162,6 +162,7 @@ export class CreatecorrectivesComponent implements OnInit {
   ============================================================================ */
   @Output() newCorrective: EventEmitter<any> = new EventEmitter();
   @ViewChild('description') description!: ElementRef;
+  @ViewChild('solicitante ') solicitante !: ElementRef;
 
   createCorrective(){
 
@@ -184,7 +185,8 @@ export class CreatecorrectivesComponent implements OnInit {
       staff: this.tecnico.uid,
       client: this.productSelect.client._id,
       product: this.productSelect.pid,
-      description: this.description.nativeElement.value
+      description: this.description.nativeElement.value,
+      solicitante: this.solicitante.nativeElement.value
     }
 
     this.correctivesService.createCorrectives(corrective)

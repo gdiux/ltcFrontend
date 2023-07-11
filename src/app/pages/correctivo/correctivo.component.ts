@@ -300,6 +300,62 @@ export class CorrectivoComponent implements OnInit {
 
   }
 
+  /** ================================================================
+   *  RECIBE
+  ==================================================================== */
+  recibe(){
+
+    Swal.fire({
+      title: 'Escribe el nombre de la persona que recibe.',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      showLoaderOnConfirm: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.correctivesService.updateCorrective( {recibe: result.value}, this.corrective.coid! )
+            .subscribe( ({corrective}) => {
+
+              this.corrective.recibe = corrective.recibe;
+
+              Swal.fire({
+                title: `Recibido por ${result.value}`,
+                icon:'success'          
+              })
+
+            }, (err) => {
+              console.log(err);              
+            });        
+      }
+    })
+
+  }
+
+  /** ================================================================
+   *  CHECKLIST
+  ==================================================================== */
+  checklist( name: string, status: boolean ){
+
+    if (name === 'red') {
+      this.corrective.red = status;
+    }else if (name === 'operativa') {
+      this.corrective.operativa = status;
+    }
+
+    this.correctivesService.updateCorrective({red: this.corrective.red, operativa: this.corrective.operativa}, this.corrective.coid!)
+        .subscribe( ({}) => {
+          Swal.fire('Estupendo', 'se actualizo el correctivo exitosamente!', 'success');
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');
+        })    
+
+  }
+
   /** ===================================================================
    * SWIPER
   ======================================================================= */

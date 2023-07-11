@@ -22,6 +22,8 @@ export class Corrective {
         public imgAft: _img[],
         public description: string,
         public video: string,
+        public red: boolean,
+        public operativa: boolean,
         public items?: any[],
         public status?: boolean,
         public estado?: string,
@@ -29,6 +31,8 @@ export class Corrective {
         public checkout?: Date,
         public date?: Date,
         public coid?: string,
+        public solicitante?: string,
+        public recibe?: boolean,
     ) {
         
     }

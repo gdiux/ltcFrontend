@@ -80,6 +80,18 @@
         </div>
     </div>
 
+    <!-- CLIENT -->
+    <div class="d-flex flex-row bg-white pl-0 shadow-sm mt-2">
+        <div class="p-10 bg-success">
+            <h3 class="text-white box m-b-0">
+                <i class=" mdi mdi-account-outline fs-2"></i>
+            </h3>
+        </div>
+        <div class="align-self-center m-l-20 pr-3">
+            <h4 class="m-b-0 text-success text-break"> {{corrective?.solicitante || ''}} </h4>
+        </div>
+    </div>
+
 </div>
 <!-- CONTROL - CLIENT -->
 
@@ -165,6 +177,9 @@
 <div class="card mb-3">
     <div class="card-body">
         <h4 class="card-title"><span class="lstick"></span>Informe Tecnico</h4>
+        <h5 class="card-title" *ngIf="corrective?.recibe"><span class="lstick"></span>Recbie: {{corrective?.recibe || ''}}</h5>
+        <button (click)="recibe()" type="button" class="btn btn-sm btn-primary"> Recibe</button>
+        <a href="https://admin.lineatecnologicadecolombia.com/api/pdf/{{corrective?.coid!}}" download target="_blank" class="btn btn-sm btn-danger ms-2 ml-2"> PDF</a>
     </div>
     <!-- ============================================================== -->
     <!-- Comment widgets -->
@@ -214,6 +229,28 @@
     </div>
     <!-- INFORMACION DEL MANTENIMIENTO -->
 </div>
+
+<!-- ===============================================================================
+    SUBIR IMAGENES ANTES DEL MANTENIMIENTO
+=============================================================================== -->
+<div class="card mb-3">
+    <div class="card-body">
+        <h4 class="card-title">Check List</h4>
+
+        <div class="form-check form-switch">
+            <input (change)="checklist('red', red.checked)" [checked]="corrective?.red || false" #red class="form-check-input" type="checkbox" role="switch" id="redImp">
+            <label class="form-check-label" for="redImp">Impresora en Red</label>
+        </div>
+
+        <div class="form-check form-switch">
+            <input (change)="checklist('operativa', operativa.checked)" [checked]="corrective?.operativa || false" #operativa class="form-check-input" type="checkbox" role="switch" id="operImp">
+            <label class="form-check-label" for="operImp">Impresora en Optimas condiciones y Operativa</label>
+        </div>
+
+    </div>
+</div>
+
+
 
 <!-- ===============================================================================
     SUBIR IMAGENES ANTES DEL MANTENIMIENTO

@@ -8,6 +8,8 @@ import { Preventive } from '../../models/preventives.model';
 // SERVICES
 import { PreventivesService } from '../../services/preventives.service';
 import { SearchService } from '../../services/search.service';
+import { UsersService } from 'src/app/services/users.service';
+import { User } from 'src/app/models/users.model';
 
 @Component({
   selector: 'app-preventivos',
@@ -16,9 +18,14 @@ import { SearchService } from '../../services/search.service';
 })
 export class PreventivosComponent implements OnInit {
 
+  public user!: User;
+
   constructor(  private preventivesServices: PreventivesService,
                 private searchService: SearchService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder,
+                private usersService:UsersService) { 
+                  this.user = usersService.user;
+                }
 
   ngOnInit(): void {
 
@@ -111,10 +118,37 @@ export class PreventivosComponent implements OnInit {
   /** ================================================================
    *   CHANGE LIMITE
   ==================================================================== */
-  limiteChange( cantidad: any ){    
-
+  limiteChange( cantidad: any ){
     this.limite = Number(cantidad);
     this.loadPreventives();
+  }
+
+  /** ================================================================
+   *   DELETE PREVENTIVE
+  ==================================================================== */
+  deletePreventive(preid: any){
+
+    this.preventivesServices.deletePreventive(preid)
+        .subscribe( ({preventive}) => {
+
+          this.preventives.map( (prev) => {
+
+            if (preventive.preid === prev.preid) {
+              prev.status = preventive.status;
+            }
+
+          })
+
+          if (preventive.status) {
+            Swal.fire('Estupendo', 'Se a activado el preventivo exitosamente!', 'success');
+          }else{
+            Swal.fire('Estupendo', 'Se a eliminado el preventivo exitosamente!', 'success');
+          }
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
 
   }
 

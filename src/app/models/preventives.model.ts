@@ -28,6 +28,7 @@ export class Preventive {
         public checkout?: Date,
         public date?: Date,
         public preid?: string,
+        public _id?: string,
     ) {
         
     }

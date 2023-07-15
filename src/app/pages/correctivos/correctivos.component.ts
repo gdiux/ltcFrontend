@@ -8,6 +8,8 @@ import { CorrectivesService } from '../../services/correctives.service';
 
 // MODELS
 import { Corrective } from '../../models/correctives.model';
+import { UsersService } from 'src/app/services/users.service';
+import { User } from 'src/app/models/users.model';
 
 @Component({
   selector: 'app-correctivos',
@@ -17,9 +19,14 @@ import { Corrective } from '../../models/correctives.model';
 })
 export class CorrectivosComponent implements OnInit {
 
+  public user!: User;
+
   constructor(  private correctivesServices: CorrectivesService,
                 private searchService: SearchService,
-                private fb: FormBuilder) { }
+                private fb: FormBuilder,
+                private usersService:UsersService) { 
+                  this.user = usersService.user;
+                }
 
   ngOnInit(): void {
 
@@ -117,6 +124,35 @@ export class CorrectivosComponent implements OnInit {
 
     this.limite = Number(cantidad);
     this.loadCorrectives();
+
+  }
+
+  /** ================================================================
+   *   DELETE CORRECTIVE
+  ==================================================================== */
+  deleteCorrective(coid: any){
+
+    this.correctivesServices.deleteCorrective(coid)
+        .subscribe( ({corrective}) => {
+
+          this.correctives.map( (corr) => {
+
+            if (corrective.coid === corr.coid) {
+              corr.status = corrective.status;
+            }
+
+          })
+
+          if (corrective.status) {
+            Swal.fire('Estupendo', 'Se a activado el correctivo exitosamente!', 'success');
+          }else{
+            Swal.fire('Estupendo', 'Se a eliminado el correctivo exitosamente!', 'success');
+          }
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
 
   }
 

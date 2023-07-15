@@ -23,11 +23,17 @@ import { UsersService } from '../../services/users.service';
 })
 export class CorrectivoComponent implements OnInit {
 
+  public user!: User;
+
   constructor(  private activatedRoute: ActivatedRoute,
                 private correctivesService: CorrectivesService,
                 private fb: FormBuilder,
                 private fileUploadService: FileUploadService,
-                private usersService: UsersService) { }
+                private usersService: UsersService) { 
+
+                  this.user = this.usersService.user;
+
+                }
 
   ngOnInit(): void {
 
@@ -108,7 +114,7 @@ export class CorrectivoComponent implements OnInit {
             this.imgsafter = true;
           }
 
-          document.title = `Preventivo #${corrective?.control} - LTC System`;
+          document.title = `Correctivo #${corrective?.control} - LTC System`;
           
 
         });
@@ -132,7 +138,6 @@ export class CorrectivoComponent implements OnInit {
     }else{
       data = {
         checkout: Date.now(),
-        estado: 'Terminado'
       }
       msg = 'El checkOut se a actualizado exitosamente!';
       text = 'de marcar la checkout ahora?';
@@ -171,6 +176,30 @@ export class CorrectivoComponent implements OnInit {
     
 
   };
+
+  /** ================================================================
+   *  FINALIZAR O ABRIR MANTENIMIENTO
+  ==================================================================== */
+  updateEstado(estado: string){
+
+    if (estado === 'Pendiente') {
+      estado = 'Terminado';
+    }else{
+      estado = 'Pendiente';
+    }
+
+    this.correctivesService.updateCorrective( {estado}, this.corrective.coid! )
+        .subscribe( ({ corrective }) => {
+
+          Swal.fire('Estupendo', 'Se ha actualizado el correctivo exitosamente!', 'success');
+          this.corrective.estado = corrective.estado;
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
+
+  }
 
   /** =====================================================================================
    * ======================================================================================

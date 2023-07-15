@@ -135,9 +135,10 @@
                                         <a [routerLink]="['/dashboard/correctivo', corrective.coid ]" class="text-decoration-none text-info pointer">
                                             <i class="mdi mdi-call-made"></i>
                                         </a>
-                                        <!-- <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">
-                                            <i class="ti-close" aria-hidden="true"></i>
-                                        </button> -->
+                                        <button [disabled]="user.role !== 'ADMIN'" (click)="deleteCorrective(corrective.coid)" type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn">
+                                            <i *ngIf="corrective.status" class="ti-close" aria-hidden="true"></i>
+                                            <i *ngIf="!corrective.status" class="ti-reload" aria-hidden="true"></i>
+                                        </button>
                                     </td>
                                 </tr>
 

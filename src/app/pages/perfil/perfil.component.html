@@ -88,7 +88,9 @@
                                             <small class="text-muted"> {{ preventive.product.serial }} </small>
                                         </td>
                                         <td>
-                                            <span class="label label-rounded" [ngClass]="{'label-warning': preventive.estado === 'Pendiente', 'label-success': preventive.estado === 'Terminado'}"> {{ preventive.estado}} </span>
+                                            <span *ngIf="!preventive.status" class="label label-danger"> Eliminado </span>
+                                            <span *ngIf="preventive.status && preventive.estado == 'Pendiente'" class="label label-warning"> {{ preventive.estado }} </span>
+                                            <span *ngIf="preventive.status && preventive.estado == 'Terminado'" class="label label-success"> {{ preventive.estado }} </span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -155,7 +157,9 @@
                                             <small class="text-muted"> {{ corrective.product.serial }} </small>
                                         </td>
                                         <td>
-                                            <span class="label label-rounded" [ngClass]="{'label-warning': corrective.estado === 'Pendiente', 'label-success': corrective.estado === 'Terminado'}"> {{ corrective.estado}} </span>
+                                            <span *ngIf="!corrective.status" class="label label-danger"> Eliminado </span>
+                                            <span *ngIf="corrective.status && corrective.estado == 'Pendiente'" class="label label-warning"> {{ corrective.estado }} </span>
+                                            <span *ngIf="corrective.status && corrective.estado == 'Terminado'" class="label label-success"> {{ corrective.estado }} </span>
                                         </td>
                                     </tr>
                                 </tbody>

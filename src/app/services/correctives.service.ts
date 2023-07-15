@@ -85,6 +85,13 @@ export class CorrectivesService {
     return this.http.put<{corrective: Corrective, ok: boolean}>(`${base_url}/correctives/${id}`, formData, this.headers);
   }
 
+  /** ================================================================
+   *   DELETE CORRECTIVE
+  ==================================================================== */
+  deleteCorrective( id:string ){
+    return this.http.delete<{ok: boolean, corrective: Corrective}>(`${base_url}/correctives/${id}`, this.headers);
+  }
+
 
   // FIN DE LA CLASE
 }

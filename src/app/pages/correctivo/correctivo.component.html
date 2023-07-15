@@ -35,9 +35,36 @@
         </div>
     </button>
 
+    <button *ngIf="user.role === 'ADMIN'" (click)="updateEstado(corrective?.estado!)" type="button " class="card mt-2 mb-0 p-3 text-white pointer" [ngClass]="{'bg-dark': corrective?.estado! === 'Terminado', 'bg-warning': corrective?.estado! === 'Pendiente'}">
+        <div class="">
+            <h4 class="mb-0 text-white fw-bold text-left">
+                <span *ngIf="corrective?.estado == 'Pendiente'"> 
+                    <i class="mdi mdi-check"></i>
+                    Finalizar
+                </span>
+                <span *ngIf="corrective?.estado == 'Terminado'">
+                    <i class="mdi mdi-restart"></i>
+                     Abrir
+                </span>                 
+            </h4>
+            <footer>
+                <small *ngIf="!corrective?.checkout">
+                    <span class="text-break" *ngIf="corrective?.estado == 'Pendiente'">Click aqui para finalizar el mantenimiento</span>
+                    <span class="text-break" *ngIf="corrective?.estado == 'Terminado'">Click aqui para volver a abrir el mantenimiento</span>       
+                </small>
+            </footer>
+        </div>
+    </button>
+
 </div>
 <!-- CHECKIN - CHECKOUT -->
 <hr>
+
+<!-- STATUS -->
+<div *ngIf="!corrective?.status" class="alert alert-danger">
+    <h4 class="mb-0 text-danger">Este mantenimiento fue eliminado</h4>
+</div>
+
 <!-- CONTROL - CLIENT -->
 <div class="d-flex align-item-center flex-wrap gap-2 mb-3">
 
@@ -425,7 +452,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="changeStafLabel">Cambiar Tecnico</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
 
@@ -441,8 +468,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" (click)="changeStaff(selectStaff.value)">Cambiar</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+                <button *ngIf="user?.role === 'ADMIN' " type="button" class="btn btn-primary" (click)="changeStaff(selectStaff.value)">Cambiar</button>
             </div>
         </div>
     </div>

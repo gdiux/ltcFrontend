@@ -12,6 +12,8 @@ import { Preventive } from 'src/app/models/preventives.model';
 import { PreventivesService } from '../../services/preventives.service';
 import { SearchService } from '../../services/search.service';
 import { FileUploadService } from '../../services/file-upload.service';
+import { UsersService } from 'src/app/services/users.service';
+import { User } from 'src/app/models/users.model';
 
 
 @Component({
@@ -22,11 +24,16 @@ import { FileUploadService } from '../../services/file-upload.service';
 
 export class PreventivoComponent implements OnInit {
 
+  public user!: User;
+
   constructor(  private activatedRoute: ActivatedRoute,
                 private preventivesService: PreventivesService,
                 private searchService: SearchService,
                 private fb: FormBuilder,
-                private fileUploadService: FileUploadService) { }
+                private fileUploadService: FileUploadService,
+                private usersService: UsersService) { 
+                  this.user = this.usersService.user;
+                }
 
   ngOnInit(): void {
 
@@ -134,6 +141,30 @@ export class PreventivoComponent implements OnInit {
     
 
   };
+
+  /** ================================================================
+   *  FINALIZAR O ABRIR MANTENIMIENTO
+  ==================================================================== */
+  updateEstado(estado: string){
+
+    if (estado === 'Pendiente') {
+      estado = 'Terminado';
+    }else{
+      estado = 'Pendiente';
+    }
+
+    this.preventivesService.updatePreventives( {estado}, this.preventive.preid! )
+        .subscribe( ({ preventive }) => {
+
+          Swal.fire('Estupendo', 'Se ha actualizado el correctivo exitosamente!', 'success');
+          this.preventive.estado = preventive.estado;
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
+
+  }
 
   /** =====================================================================================
    * ======================================================================================

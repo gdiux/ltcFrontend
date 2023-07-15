@@ -183,6 +183,6 @@
 
 
 <!-- ASIGNAR CLIENTE -->
-<app-assign-client [productC]="product" (actualizar)="loadProduct()"></app-assign-client>
 <app-createpreventives *ngIf="product" [inProduct]="product"></app-createpreventives>
 <app-createcorrectives *ngIf="product" [inProduct]="product"></app-createcorrectives>
+<app-assign-client [productC]="product" (actualizar)="loadProduct()"></app-assign-client>

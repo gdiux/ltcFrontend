@@ -166,6 +166,7 @@
             <div class="pro-img m-t-20"><img class="shadow" [src]="corrective?.staff.img | imagen:'user'" alt="user"></div>
             <h3 class="m-b-0"> {{ corrective?.staff.name }} </h3>
             <h6 class="text-muted"> {{ corrective?.staff.role }} </h6>
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#changeStaf">Cambiar</button>
         </div>
 
     </div>
@@ -179,7 +180,7 @@
         <h4 class="card-title"><span class="lstick"></span>Informe Tecnico</h4>
         <h5 class="card-title" *ngIf="corrective?.recibe"><span class="lstick"></span>Recbie: {{corrective?.recibe || ''}}</h5>
         <button (click)="recibe()" type="button" class="btn btn-sm btn-primary"> Recibe</button>
-        <a href="https://admin.lineatecnologicadecolombia.com/api/pdf/{{corrective?.coid!}}" download target="_blank" class="btn btn-sm btn-danger ms-2 ml-2"> PDF</a>
+        <a href="https://admin.lineatecnologicadecolombia.com/api/correctives/pdf/{{corrective?.coid!}}" download target="_blank" class="btn btn-sm btn-danger ms-2 ml-2"> PDF</a>
     </div>
     <!-- ============================================================== -->
     <!-- Comment widgets -->
@@ -414,4 +415,38 @@
 
 <!-- ===============================================================================
     SUBIR IMAGENES DESPUES DEL MANTENIMIENTO
+=============================================================================== -->
+
+<!-- ===============================================================================
+    CAMBIAR TECNICO
+=============================================================================== -->
+<div class="modal fade" id="changeStaf">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="changeStafLabel">Cambiar Tecnico</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Selecciona el tecnico nuevo</label>
+                    <select class="form-control" id="exampleFormControlSelect1" #selectStaff>
+                        <option selected value="">Selecciona el tecnico</option>
+                        <ng-container *ngFor="let user of users">
+                            <option  *ngIf="user.uid !== corrective?.staff._id" [value]="user.uid" > {{ user.name }} </option>
+                        </ng-container>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="changeStaff(selectStaff.value)">Cambiar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ===============================================================================
+    CAMBIAR TECNICO
 =============================================================================== -->

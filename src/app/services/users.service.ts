@@ -108,9 +108,7 @@ export class UsersService {
    *  LOAD USERS
   ==================================================================== */
   loadUsers(){
-
     return this.http.get<LoadUsers>( `${base_url}/users`, this.headers );
-
   }
 
   /** ================================================================

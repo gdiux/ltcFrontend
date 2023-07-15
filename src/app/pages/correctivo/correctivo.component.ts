@@ -5,9 +5,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { SwiperOptions } from 'swiper';
 import Swal from 'sweetalert2';
+
+// MODELS
+import { User } from 'src/app/models/users.model';
+import { Corrective } from '../../models/correctives.model';
+
+// SERVICES
 import { CorrectivesService } from '../../services/correctives.service';
 import { FileUploadService } from '../../services/file-upload.service';
-import { Corrective } from '../../models/correctives.model';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-correctivo',
@@ -20,7 +26,8 @@ export class CorrectivoComponent implements OnInit {
   constructor(  private activatedRoute: ActivatedRoute,
                 private correctivesService: CorrectivesService,
                 private fb: FormBuilder,
-                private fileUploadService: FileUploadService) { }
+                private fileUploadService: FileUploadService,
+                private usersService: UsersService) { }
 
   ngOnInit(): void {
 
@@ -28,8 +35,46 @@ export class CorrectivoComponent implements OnInit {
         .subscribe( ({id}) => {
           
           this.loadCorrectiveId(id);
+          this.loadUsers();
           
         });
+
+  }
+
+  /** ================================================================
+   *  LOAD USERS
+  ==================================================================== */
+  public users: User[] = [];
+  loadUsers(){
+
+    this.usersService.loadUsers()
+        .subscribe( ({users}) => {
+          this.users = users.filter( user => user.status === true );
+        }, (err) => {
+          console.log(err);          
+        });
+
+  }
+
+  /** ================================================================
+   *  CAMBIAR TECNICO
+  ==================================================================== */
+  changeStaff(staff: string){
+
+    if (staff.length === 0) {
+      return;
+    }
+
+    this.correctivesService.updateCorrective({staff}, this.corrective.coid!)
+        .subscribe( ({corrective}) => {
+
+          this.loadCorrectiveId(this.corrective.coid!);
+          Swal.fire('Estupendo', 'Se ha cambiado el tecnico exitosamente!', 'success');
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
 
   }
 
@@ -51,7 +96,7 @@ export class CorrectivoComponent implements OnInit {
   loadCorrectiveId(id: string){
 
     this.correctivesService.loadCorrectiveId(id)
-        .subscribe( ({corrective}) => {
+        .subscribe( ({corrective}) => {          
           
           this.corrective = corrective;
 

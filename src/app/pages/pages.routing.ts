@@ -19,6 +19,7 @@ import { ProductoComponent } from './producto/producto.component';
 import { AbonadosComponent } from './abonados/abonados.component';
 import { AbonadoComponent } from './abonado/abonado.component';
 import { PrefixesComponent } from './prefixes/prefixes.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 
 // COMPONENTS
@@ -32,18 +33,18 @@ const routes: Routes = [
         children:
         [
           { path: '', component: DashboardComponent, data:{ title: 'Dashboard' } },
-          { path: 'abonado/:id', component: AbonadoComponent, data:{ title: 'Abonado' } },
-          { path: 'abonados', component: AbonadosComponent, data:{ title: 'Abonados' } },
-          { path: 'clientes', component: ClientesComponent, data:{ title: 'Clientes' } },
-          { path: 'correctivos', component: CorrectivosComponent, data:{ title: 'Correctivos' } },
+          { path: 'abonado/:id', component: AbonadoComponent, canActivate: [AdminGuard], data:{ title: 'Abonado' } },
+          { path: 'abonados', component: AbonadosComponent, canActivate: [AdminGuard], data:{ title: 'Abonados' } },
+          { path: 'clientes', component: ClientesComponent, canActivate: [AdminGuard], data:{ title: 'Clientes' } },
+          { path: 'correctivos', component: CorrectivosComponent, canActivate: [AdminGuard], data:{ title: 'Correctivos' } },
           { path: 'correctivo/:id', component: CorrectivoComponent, data:{ title: 'Correctivo' } },
-          { path: 'prefixes', component: PrefixesComponent, data:{ title: 'Prefijos' } },
-          { path: 'preventivos', component: PreventivosComponent, data:{ title: 'Preventivos' } },
+          { path: 'prefixes', component: PrefixesComponent, canActivate: [AdminGuard], data:{ title: 'Prefijos' } },
+          { path: 'preventivos', component: PreventivosComponent, canActivate: [AdminGuard], data:{ title: 'Preventivos' } },
           { path: 'preventivo/:id', component: PreventivoComponent, data:{ title: 'Preventivo' } },
-          { path: 'productos', component: ProductosComponent, data:{ title: 'Productos' } },
-          { path: 'producto/:id', component: ProductoComponent, data:{ title: 'Producto' } },
+          { path: 'productos', component: ProductosComponent, canActivate: [AdminGuard], data:{ title: 'Productos' } },
+          { path: 'producto/:id', component: ProductoComponent, canActivate: [AdminGuard], data:{ title: 'Producto' } },
           { path: 'perfil/:id', component: PerfilComponent, data:{ title: 'Perfil' } },
-          { path: 'usuarios', component: UsuariosComponent, data:{ title: 'Usuarios' } },
+          { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard], data:{ title: 'Usuarios' } },
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ] 
       },    

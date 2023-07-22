@@ -1,21 +1,18 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { LoadPrefix } from '../interfaces/load-prefix.interface';
-
-import { Prefix } from '../models/prefix.model';
+import { HttpClient } from '@angular/common/http';
 
 // ENVIRONMENT
 import { environment } from '../../environments/environment';
+import { Task } from '../models/task.model';
 
 const base_url = environment.base_url;
 
 @Injectable({
   providedIn: 'root'
 })
-export class PrefixesService {
+export class TasksService {
 
-  constructor(  private http: HttpClient) { }
+  constructor(private http:HttpClient) { }
 
   /** ================================================================
    *   GET TOKEN
@@ -36,25 +33,33 @@ export class PrefixesService {
   }
 
   /** ================================================================
-   *  LOAD PREFIXES
+   *  LOAD TASKS
   ==================================================================== */
-  loadPrefixes(){
-    return this.http.get<LoadPrefix>( `${base_url}/prefixes`, this.headers );
+  loadTasks(query: any){
+    return this.http.post<{ok: boolean, tasks: Task[], total:number}>( `${base_url}/tasks/query`, query, this.headers );
   }
 
   /** ================================================================
-   *  CREATE PREFIX
+   *  CREATE TASK
   ==================================================================== */
-  createPrefix(formData: any){
-    return this.http.post<{ok: Boolean, prefix: Prefix}>(`${base_url}/prefixes`, formData, this.headers);
+  createTask(formData: any){
+    return this.http.post<{ok: Boolean, task: Task}>(`${base_url}/tasks`, formData, this.headers);
   }
 
   /** ================================================================
-   *  UPDATE PREFIX
+   *  UPDATE TASK
   ==================================================================== */
-  updatePrefix(formData: any, id: string){
-    return this.http.put<({ok: Boolean, prefix: Prefix})>(`${base_url}/prefixes/${id}`, formData, this.headers);
+  updateTask(formData: any, id: string){
+    return this.http.put<({ok: Boolean, task: Task})>(`${base_url}/tasks/${id}`, formData, this.headers);
   }
+
+  /** ================================================================
+   *  UPDATE TASK
+  ==================================================================== */
+  deleteTask(id: string){
+    return this.http.delete<({ok: Boolean, msg: string})>(`${base_url}/tasks/${id}`, this.headers);
+  }
+
 
   // FIN DE LA CLASE
 }

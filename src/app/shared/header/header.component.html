@@ -71,6 +71,11 @@
                 <!-- End Comment -->
                 <!-- ============================================================== -->
                 <li class="nav-item">
+                    <a type="button" class="nav-link waves-effect waves-dark" data-toggle="modal" data-target="#nueva-tarea">
+                        <i class="ti-plus" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a type="button" class="nav-link waves-effect waves-dark" data-toggle="modal" data-target="#buscar-product">
                         <i class="ti-search" aria-hidden="true"></i>
                     </a>
@@ -177,6 +182,69 @@ MODAL BUSACR PRODUCT
                         </tbody>
                     </table>
                 </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================= 
+MODAL CREAR TAREA
+======================================================== -->
+<div id="nueva-tarea" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalNuevaTarea" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalNuevaTarea">Nueva Tarea</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal form-material" autocomplete="off" [formGroup]="formTask" (ngSubmit)="createTask()">
+
+                    <div class="form-group has-danger">
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="para" type="text" class="form-control" placeholder="Para">
+                            <div *ngIf="validate('para')" class="form-control-feedback">
+                                <small> Debe de especificar para que es la tarea </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DESCIPCION DEL CORRECTIVO -->
+                    <div class="form-group">
+                        <div class="col-md-12 m-b-20">
+                            <label>Descripción de la tarea</label>
+                            <textarea class="form-control" rows="3" #description placeholder="Escribe la descripción de la tarea..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-danger">
+                        <div class="col-md-12 m-b-20">
+                            <input formControlName="address" type="text" class="form-control" placeholder="Dirección">
+                            <div *ngIf="validate('address')" class="form-control-feedback">
+                                <small>La dirección es obligatoria </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12 m-b-20">
+                            <label>Seleccionar Usuario</label>
+                            <select class="form-control" formControlName="staff">
+                                <option *ngFor="let usuario of users" [value]="usuario.uid" > {{ usuario.name }} </option>
+                            </select>
+                            <div *ngIf="validate('staff')" class="form-control-feedback">
+                                <small class="text-danger">La usuario es obligatoria </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info waves-effect btn-block">Crear</button>
+                </form>
 
             </div>
             <div class="modal-footer">

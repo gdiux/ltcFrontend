@@ -125,6 +125,7 @@ export class DashboardComponent implements OnInit {
       task.end = true;
     }
 
+
     this.tasksService.updateTask({end: task.end}, task.taskid!)
         .subscribe( ({task}) => {
 

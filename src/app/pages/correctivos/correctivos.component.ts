@@ -53,6 +53,9 @@ export class CorrectivosComponent implements OnInit {
     this.correctivesServices.loadCorrectives(this.desde, this.limite)
         .subscribe( ({ correctives, total }) => {
 
+          console.log(correctives);
+          
+
           // COMPROBAR SI EXISTEN RESULTADOS
           if (correctives.length === 0) {
             this.sinResultados = true;           

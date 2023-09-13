@@ -205,7 +205,7 @@
 <div class="card mb-3">
     <div class="card-body">
         <h4 class="card-title"><span class="lstick"></span>Informe Tecnico</h4>
-        <h5 class="card-title" *ngIf="corrective?.recibe"><span class="lstick"></span>Recbie: {{corrective?.recibe || ''}}</h5>
+        <h5 class="card-title" *ngIf="corrective?.recibe"><span class="lstick"></span>Recibe: {{corrective?.recibe || ''}}</h5>
         <button (click)="recibe()" type="button" class="btn btn-sm btn-primary"> Recibe</button>
         <a href="https://admin.lineatecnologicadecolombia.com/api/correctives/pdf/{{corrective?.coid!}}" download target="_blank" class="btn btn-sm btn-danger ms-2 ml-2"> PDF</a>
     </div>

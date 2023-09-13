@@ -233,10 +233,10 @@
                         <h4 *ngIf="tasks.length === 0">Vacia la lista de tareas...</h4>
                     </div>
 
-                    <div class="d-flex flex-row comment-row mb-1" *ngFor="let task of tasks">
+                    <div class="d-flex flex-row comment-row mb-1" *ngFor="let tarea of tasks; let i = index">
 
                         <div class="p-2" *ngIf="user.role === 'ADMIN'">
-                            <button (click)="delTask(task.taskid!)" type="button" class="btn btn-circle btn-danger">
+                            <button (click)="delTask(tarea.taskid!)" type="button" class="btn btn-circle btn-danger">
                             <i class="ti-trash"></i>
                         </button>
                         </div>
@@ -245,30 +245,30 @@
 
                             <div class="d-flex justify-content-between">
                                 <!-- CREADO POR -->
-                                <h4 class="fw-bold"> {{ task.create.name }} </h4>
+                                <h4 class="fw-bold"> {{ tarea.create.name }} </h4>
 
                                 <!-- ESTADO -->
                                 <div class="form-check form-switch">
-                                    <input (change)="confirmTask(task)" [disabled]="user.role !== 'ADMIN'" [checked]="task.end || false" class="form-check-input" type="checkbox" role="switch" id="redImp">
-                                    <label class="form-check-label" for="redImp"></label>
+                                    <input (click)="confirmTask(tarea)"  [checked]="tarea.end || false" class="form-check-input" type="checkbox" role="switch" [id]="'redImp'+i">
+                                    <label class="form-check-label" [for]="'redImp'+i"></label>
                                 </div>
 
                             </div>
 
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"> <span class="fw-bold">Usuario:</span> {{ task.staff.name }}</li>
-                                <li class="list-group-item"> <span class="fw-bold">Para:</span> {{ task.para }}</li>
-                                <li class="list-group-item"> <span class="fw-bold text-break">Dirección:</span> {{ task.address }}</li>
+                                <li class="list-group-item"> <span class="fw-bold">Usuario:</span> {{ tarea.staff.name }}</li>
+                                <li class="list-group-item"> <span class="fw-bold">Para:</span> {{ tarea.para }}</li>
+                                <li class="list-group-item"> <span class="fw-bold text-break">Dirección:</span> {{ tarea.address }}</li>
                             </ul>
 
-                            <p class="my-2 m-b-5 text-break"> {{task.description}} </p>
+                            <p class="my-2 m-b-5 text-break"> {{tarea.description}} </p>
 
                             <div class="comment-footer ">
-                                <span class="text-muted pull-right"> {{ task.fecha | date:'dd/M/y' }} <span *ngIf="task.fechaend">- {{task.fechaend | date:'short' }}</span> </span>
+                                <span class="text-muted pull-right"> {{ tarea.fecha | date:'dd/M/y' }} <span *ngIf="tarea.fechaend">- {{tarea.fechaend | date:'short' }}</span> </span>
 
-                                <button (click)="finTask(task)" type="button" [disabled]="task.status && user.role !== 'ADMIN'" class="btn btn-sm" [ngClass]="{'btn-success': task.status, 'btn-dark': !task.status}">
-                                <span *ngIf="!task.status">Ejecutar</span>
-                                <span *ngIf="task.status">Ejecutada</span>
+                                <button (click)="finTask(tarea)" type="button" [disabled]="tarea.status && user.role !== 'ADMIN'" class="btn btn-sm" [ngClass]="{'btn-success': tarea.status, 'btn-dark': !tarea.status}">
+                                <span *ngIf="!tarea.status">Ejecutar</span>
+                                <span *ngIf="tarea.status">Ejecutada</span>
                             </button>
 
                             </div>

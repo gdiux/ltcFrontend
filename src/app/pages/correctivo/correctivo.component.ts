@@ -48,6 +48,31 @@ export class CorrectivoComponent implements OnInit {
   }
 
   /** ================================================================
+   *  EDIT DESCRIPTION
+  ==================================================================== */
+  updateDescription(description: string){
+
+    if (description.length === 0) {
+      Swal.fire('Atención', 'Debes de agregar una descripcion al mantenimiento, no debe ir vacio', 'warning');
+      return;
+    }
+
+    this.correctivesService.updateCorrective({description}, this.corrective.coid!)
+        .subscribe( ({ corrective }) => {
+
+          this.corrective.description = corrective.description;
+          Swal.fire('Estupendo', 'Se ha editado la descripción del correctivo exitosamente!', 'success');
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
+    
+
+  }
+
+
+  /** ================================================================
    *  LOAD USERS
   ==================================================================== */
   public users: User[] = [];

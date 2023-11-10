@@ -120,9 +120,14 @@
     </div>
 
 </div>
-<!-- CONTROL - CLIENT -->
+<!-- CONTROL - CLIENT  -->
 
 <div class="card bg-danger p-3 text-center text-white text-break shadow animated pulse x5 ">
+
+    <div class="d-flex justify-content-end ">
+        <button type="button" class="btn btn-danger btn-circle" data-toggle="modal" data-target="#editInfo"><i class="fa fa-pencil-square-o"></i> </button>
+    </div>
+
     <h4 class="mb-0 fw-bold text-white">Descripción</h4>
     <p> {{ corrective?.description }} </p>
     <footer>
@@ -476,4 +481,34 @@
 </div>
 <!-- ===============================================================================
     CAMBIAR TECNICO
+=============================================================================== -->
+
+<!-- ===============================================================================
+    EDITAR DESCRIPCION
+=============================================================================== -->
+<div class="modal fade" id="editInfo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editInfoLabel">Editar descripción del mantenimiento</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+
+                <!-- DESCIPCION DEL CORRECTIVO -->
+                <div class="form-group">
+                    <label>Descripción del correctivo</label>
+                    <textarea class="form-control" rows="3" #descriptionUp placeholder="Escribe la descripción del mantenimiento correctivo..." [value]="corrective.description"></textarea>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="updateDescription(descriptionUp.value)">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ===============================================================================
+    EDITAR DESCRIPCION
 =============================================================================== -->

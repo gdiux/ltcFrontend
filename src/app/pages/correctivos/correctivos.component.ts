@@ -45,16 +45,23 @@ export class CorrectivosComponent implements OnInit {
   public cargando: boolean = false;
   public sinResultados: boolean = false;
 
+  public query: any = {
+    desde: 0,
+    hasta: 50,
+    status: true,
+    sort: {
+      'estado': 1,
+      'date': 1
+    }
+  }  
+
   loadCorrectives(){
 
     this.cargando = true;
     this.sinResultados = false;
 
-    this.correctivesServices.loadCorrectives(this.desde, this.limite)
-        .subscribe( ({ correctives, total }) => {
-
-          console.log(correctives);
-          
+    this.correctivesServices.loadCorrectivesQuery(this.query)
+        .subscribe( ({ correctives, total }) => {   
 
           // COMPROBAR SI EXISTEN RESULTADOS
           if (correctives.length === 0) {
@@ -70,6 +77,32 @@ export class CorrectivosComponent implements OnInit {
         }, (err) => { Swal.fire('Error', err.error.msg, 'error'); });
 
   }
+
+  // loadCorrectives(){
+
+  //   this.cargando = true;
+  //   this.sinResultados = false;
+
+  //   this.correctivesServices.loadCorrectives(this.desde, this.limite)
+  //       .subscribe( ({ correctives, total }) => {
+
+  //         console.log(correctives);
+          
+
+  //         // COMPROBAR SI EXISTEN RESULTADOS
+  //         if (correctives.length === 0) {
+  //           this.sinResultados = true;           
+  //         }
+  //         // COMPROBAR SI EXISTEN RESULTADOS
+
+  //         this.cargando = false;
+  //         this.total = total;
+  //         this.correctives = correctives;
+  //         this.correctivesTemp = correctives;          
+
+  //       }, (err) => { Swal.fire('Error', err.error.msg, 'error'); });
+
+  // }
 
 
   /** ======================================================================
@@ -108,12 +141,12 @@ export class CorrectivosComponent implements OnInit {
       valor = valor * (this.limite/10);      
     }
     
-    this.desde += valor;
+    this.query.desde += valor;
     
     if (this.desde < 0) {
-      this.desde = 0;
-    }else if( this.desde > this.total ){
-      this.desde -= valor;
+      this.query.desde = 0;
+    }else if( this.query.desde > this.total ){
+      this.query.desde -= valor;
     }
     
     this.loadCorrectives();
@@ -125,7 +158,40 @@ export class CorrectivosComponent implements OnInit {
   ==================================================================== */
   limiteChange( cantidad: any ){    
 
-    this.limite = Number(cantidad);
+    this.query.hasta = Number(cantidad);
+    this.loadCorrectives();
+
+  }
+
+  /** ================================================================
+   *   CHANGE ESTADO
+  ==================================================================== */
+  estadoChange( estado: string ){
+
+    this.query.estado = estado;
+
+    if (estado === 'Todos') {
+      delete this.query.estado;
+    }
+
+    this.loadCorrectives();
+
+  }
+
+  /** ================================================================
+   *   CHANGE ESTADO 
+   *   Primeros
+      Ultimos
+      'date': 1
+  ==================================================================== */
+  ordenChange(orden: string ){
+
+    if (orden === 'Primeros') {
+      this.query.sort.date = 1
+    }else if (orden === 'Ultimos') {
+      this.query.sort.date = -1
+    }
+
     this.loadCorrectives();
 
   }

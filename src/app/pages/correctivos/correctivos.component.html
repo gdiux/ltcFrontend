@@ -53,19 +53,42 @@
 
                     <div class="my-2">
 
-                        <div>
+                        <div class="d-flex justify-content-end mb-3">
                             <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#new-correctivo">Crear Correctivo</button>
                         </div>
 
-                        <label for="mostrar" class="my-2">Mostrar: </label>
-                        <select name="" id="" [value]="limite" #mostrar (change)="limiteChange(mostrar.value)">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                            <option value="250">250</option>
-                            <option value="500">500</option>
-                        </select>
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <div>
+                                <label for="mostrar" class="my-2">Ordenar: </label>
+                                <select name="" id="" #ordenar (change)="ordenChange(ordenar.value)">
+                                    <option value="Primeros">Primeros</option>
+                                    <option value="Ultimos">Ultimos</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="mostrar" class="my-2">Estado: </label>
+                                <select name="" id="" #estado (change)="estadoChange(estado.value)">
+                                    <option value="Todos">Todos</option>
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Terminado">Terminado</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="mostrar" class="my-2">Mostrar: </label>
+                                <select name="" id="" [value]="limite" #mostrar (change)="limiteChange(mostrar.value)">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="250">250</option>
+                                    <option value="500">500</option>
+                                </select>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>

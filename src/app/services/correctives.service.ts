@@ -65,6 +65,13 @@ export class CorrectivesService {
   }
 
   /** ================================================================
+   *   LOAD PREVENTIVES QUERY
+  ==================================================================== */
+  loadCorrectivesQuery(query: any){
+    return this.http.post<LoadCorrectives>(`${base_url}/correctives/query`, query, this.headers);
+  }
+
+  /** ================================================================
    *   CREATE CORRECTIVES
   ==================================================================== */
   createCorrectives(formData: any){

@@ -100,6 +100,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Producto</th>
+                                <th>Ubicación</th>
                                 <th>Tecnico</th>
                                 <th>Cliente</th>
                                 <th>Estado</th>
@@ -124,6 +125,7 @@
                                         </a>
                                     </td>
                                     <td class="align-middle"> {{ corrective.product.code }} </td>
+                                    <td class="align-middle"> {{ corrective.product.ubicacion || 'Sin ubicación' }} </td>
                                     <td class="align-middle"> {{ corrective.staff.name }} </td>
                                     <td class="align-middle" data-toggle="tooltip" data-placement="top" title="{{corrective.client.name}}" data-original-title="Tooltip on top">
                                         {{ corrective.client.name }}

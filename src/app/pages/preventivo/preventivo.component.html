@@ -204,7 +204,7 @@
                 <div class="comment-footer">
                     <span class="text-muted pull-right"> {{ nota.date | date:'EEEE d MMMM  y h:mm a' }} </span>
                     <span class="action-icons active" *ngIf="i > 0">
-                        <a href="javascript:void(0)"><i class="icon-close"></i></a> 
+                        <a (click)="deleteNote(nota._id!)" class="pointer"><i class="icon-close"></i></a> 
                     </span>
                 </div>
             </div>

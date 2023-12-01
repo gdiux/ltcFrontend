@@ -77,6 +77,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Producto</th>
+                                <th>Ubicación</th>
                                 <th>Tecnico</th>
                                 <th>Cliente</th>
                                 <th>Estado</th>
@@ -101,6 +102,7 @@
                                         </a>
                                     </td>
                                     <td class="align-middle"> {{ preventive.product.code }} </td>
+                                    <td class="align-middle"> {{ preventive.product.ubicacion || 'Sin ubicación' }} </td>
                                     <td class="align-middle"> {{ preventive.staff.name }} </td>
                                     <td class="align-middle" data-toggle="tooltip" data-placement="top" title="{{preventive.client.name}}" data-original-title="Tooltip on top">
                                         {{ preventive.client.name }}

@@ -1,7 +1,8 @@
 interface _notas{
     note: string,
     date: Date,
-    staff: any
+    staff: any,
+    _id?: string
 };
 
 interface _img{

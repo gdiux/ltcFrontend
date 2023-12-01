@@ -99,6 +99,13 @@ export class CorrectivesService {
     return this.http.delete<{ok: boolean, corrective: Corrective}>(`${base_url}/correctives/${id}`, this.headers);
   }
 
+  /** ================================================================
+   *   DELETE NOTE CORRECTIVE
+  ==================================================================== */
+  deleteNoteCorrective( id:string, note: string ){
+    return this.http.delete<{ok: boolean, corrective: Corrective}>(`${base_url}/correctives/delete/note/${id}/${note}`, this.headers);
+  }
+
 
   // FIN DE LA CLASE
 }

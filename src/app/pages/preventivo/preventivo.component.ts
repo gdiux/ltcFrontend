@@ -336,6 +336,40 @@ export class PreventivoComponent implements OnInit {
 
   }
 
+  /** ================================================================
+   *  DELETE NOTE
+  ==================================================================== */
+  deleteNote(note: string){
+
+    Swal.fire({
+      title: "Estas seguro?",
+      text: "De borrar este comentario!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrar!",
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.preventivesService.deleteNotePreventive(this.preventive.preid!, note)
+            .subscribe( ({preventive}) => {
+
+              this.preventive.notes = preventive.notes;
+              Swal.fire('Estupendo', 'Se ha borrado el comentario exitosamente!', 'success');
+
+            }, (err) => {
+              console.log(err);
+              Swal.fire('Error', err.error.msg, 'error');              
+            });
+
+      }
+    });
+    
+
+  }
+
   /** ===================================================================
    * SWIPER
   ======================================================================= */

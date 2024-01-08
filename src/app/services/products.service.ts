@@ -71,6 +71,13 @@ export class ProductsService {
   /** ================================================================
    *   CREATE PRODUCTS
   ==================================================================== */
+  loadProductsQuery( query: any ){
+    return this.http.post<{ok: boolean, products: Product[]}>(`${base_url}/products/query`, query, this.headers);
+  }
+
+  /** ================================================================
+   *   CREATE PRODUCTS
+  ==================================================================== */
   createProduct( formData: any ){
     return this.http.post<{ok: boolean, product: Product}>(`${base_url}/products`, formData, this.headers);
   }

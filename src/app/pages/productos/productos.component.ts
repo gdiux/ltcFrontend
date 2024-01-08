@@ -3,6 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
 
+// EXCEL
+import * as XLSX from 'xlsx';
+
 // SERVICES
 import { ProductsService } from '../../services/products.service';
 import { SearchService } from '../../services/search.service';
@@ -359,6 +362,56 @@ export class ProductosComponent implements OnInit {
     }else{
       return false;
     }
+
+  }
+
+  /** ======================================================================
+   * EXPORTAR EXCEL
+  ====================================================================== */
+  exportar(){
+
+    let inventario:any = [];
+
+    this.productsService.loadProductsQuery({})
+        .subscribe( ({products}) => {   
+
+          
+          for (const product of products) {
+            let client = '';
+  
+            if (product.client) {
+              client = product.client.name;
+            }
+
+            inventario.push({
+              unidad: 1,
+              cliente: client,
+              ubicacion: product.ubicacion,
+              marca: product.brand,
+              modelo: product.model,
+              serial: product.serial,
+              inventario: product.code,
+            });
+          }
+
+          /* generate a worksheet */
+          var ws = XLSX.utils.json_to_sheet(inventario);
+      
+          /* add to workbook */
+          var wb = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, "Productos");
+      
+          /* title */
+          let title = 'inventario.xls';
+      
+          /* write workbook and force a download */
+          XLSX.writeFile(wb, title);
+          
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
 
   }
 

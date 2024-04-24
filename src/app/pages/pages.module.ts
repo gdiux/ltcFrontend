@@ -31,6 +31,12 @@ import { CardsComponent } from './dashboard/components/cards/cards.component';
 import { AbonadosComponent } from './abonados/abonados.component';
 import { AbonadoComponent } from './abonado/abonado.component';
 import { PrefixesComponent } from './prefixes/prefixes.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { ItemComponent } from './item/item.component';
+import { MovimientosComponent } from './movimientos/movimientos.component';
+import { FacturarComponent } from './facturar/facturar.component';
+import { FacturasComponent } from './facturas/facturas.component';
+import { FacturaComponent } from './factura/factura.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +61,13 @@ import { PrefixesComponent } from './prefixes/prefixes.component';
     CardsComponent,
     AbonadosComponent,
     AbonadoComponent,
-    PrefixesComponent
+    PrefixesComponent,
+    InventoryComponent,
+    ItemComponent,
+    MovimientosComponent,
+    FacturarComponent,
+    FacturasComponent,
+    FacturaComponent
   ],
   exports:[
     DashboardComponent,

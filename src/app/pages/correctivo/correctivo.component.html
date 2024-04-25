@@ -206,62 +206,181 @@
 
 </div>
 
-<!-- INFORMACION DEL MANTENIMIENTO -->
-<div class="card mb-3">
-    <div class="card-body">
-        <h4 class="card-title"><span class="lstick"></span>Informe Tecnico</h4>
-        <h5 class="card-title" *ngIf="corrective?.recibe"><span class="lstick"></span>Recibe: {{corrective?.recibe || ''}}</h5>
-        <button (click)="recibe()" type="button" class="btn btn-sm btn-primary"> Recibe</button>
-        <a href="https://admin.lineatecnologicadecolombia.com/api/correctives/pdf/{{corrective?.coid!}}" download target="_blank" class="btn btn-sm btn-danger ms-2 ml-2"> PDF</a>
-    </div>
-    <!-- ============================================================== -->
-    <!-- Comment widgets -->
-    <!-- ============================================================== -->
-    <div class="comment-widgets">
+<div class="d-flex flex-row flex-wrap gap-2">
 
-        <!-- Comment Row -->
-        <div class="d-flex flex-row comment-row" *ngFor="let nota of corrective?.notes; let i = index">
-            <div class="p-2">
-                <span class="round">
+    <div class="mb-3 col-md-6">
+        <!-- INFORMACION DEL MANTENIMIENTO -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"><span class="lstick"></span>Informe Tecnico</h4>
+                <h5 class="card-title" *ngIf="corrective?.recibe"><span class="lstick"></span>Recibe: {{corrective?.recibe || ''}}</h5>
+                <button (click)="recibe()" type="button" class="btn btn-sm btn-primary"> Recibe</button>
+                <a href="https://admin.lineatecnologicadecolombia.com/api/correctives/pdf/{{corrective?.coid!}}" download target="_blank" class="btn btn-sm btn-danger ms-2 ml-2"> PDF</a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- Comment widgets -->
+            <!-- ============================================================== -->
+            <div class="comment-widgets">
+
+                <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row" *ngFor="let nota of corrective?.notes; let i = index">
+                    <div class="p-2">
+                        <span class="round">
                     <img [src]="nota.staff.img | imagen: 'user'" alt="user" width="50">
                 </span>
-            </div>
-            <div class="comment-text w-100">
-                <h5 class="fw-bold"> {{ nota.staff.name }} </h5>
-                <p class="m-b-5 text-break">
-                    {{ nota.note }}
-                </p>
-                <div class="comment-footer">
-                    <span class="text-muted pull-right"> {{ nota.date | date:'EEEE d MMMM  y h:mm a' }} </span>
-                    <span class="action-icons active" *ngIf="i > 0">
+                    </div>
+                    <div class="comment-text w-100">
+                        <h5 class="fw-bold"> {{ nota.staff.name }} </h5>
+                        <p class="m-b-5 text-break">
+                            {{ nota.note }}
+                        </p>
+                        <div class="comment-footer">
+                            <span class="text-muted pull-right"> {{ nota.date | date:'EEEE d MMMM  y h:mm a' }} </span>
+                            <span class="action-icons active" *ngIf="i > 0">
                         <a (click)="deleteNote(nota._id!)" class="pointer" ><i class="icon-close"></i></a> 
                     </span>
-                </div>
-            </div>
-        </div>
-        <!-- Comment Row -->
-
-        <!-- ENVIAR COMENTARIO -->
-        <form autocomplete="off" [formGroup]="formNotes" (ngSubmit)="postNota()">
-            <div class="card-body b-t">
-                <div class="row">
-                    <div class="col-8">
-                        <textarea formControlName="note" placeholder="Escribe el informe tecnico" (keyup.enter)="postNota()" class="form-control b-0" #notaI></textarea>
-                        <div *ngIf="validate('note')" class="form-control-feedback animated fadeIn text-danger">
-                            <small>** Campo de mensaje vacio </small>
                         </div>
                     </div>
-                    <div class="col-4 text-right">
-                        <button type="submit" class="btn btn-info btn-circle btn-lg"><i class="fa fa-paper-plane-o"></i> </button>
+                </div>
+                <!-- Comment Row -->
+
+                <!-- ENVIAR COMENTARIO -->
+                <form autocomplete="off" [formGroup]="formNotes" (ngSubmit)="postNota()">
+                    <div class="card-body b-t">
+                        <div class="row">
+                            <div class="col-8">
+                                <textarea formControlName="note" placeholder="Escribe el informe tecnico" (keyup.enter)="postNota()" class="form-control b-0" #notaI></textarea>
+                                <div *ngIf="validate('note')" class="form-control-feedback animated fadeIn text-danger">
+                                    <small>** Campo de mensaje vacio </small>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button type="submit" class="btn btn-info btn-circle btn-lg"><i class="fa fa-paper-plane-o"></i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- ENVIAR COMENTARIO -->
+
+            </div>
+            <!-- INFORMACION DEL MANTENIMIENTO -->
+        </div>
+    </div>
+
+    <!-- ADD ITEMS CORRECTIVE -->
+    <div class="mb-3 col-md-6">
+
+        <div class="card col-12">
+            <div class="card-body">
+
+                <h4 class="card-title"><span class="lstick"></span>ITEMS</h4>
+
+                <hr>
+
+                <div>
+
+                    <button #btnAI class="btn btn-primary" type="button" data-toggle="collapse" data-target="#addItemCollapse" aria-expanded="false" aria-controls="addItemCollapse">
+                        Agregar Item
+                      </button>
+
+                    <div class="collapse mt-3" id="addItemCollapse">
+                        <div class="card card-body">
+
+                            <div class="form-group">
+                                <label>Buscar Item</label>
+                                <input type="text" (keyup)="searchItems(searchII.value)" class="form-control" placeholder="Buscar Item" #searchII>
+                                <small *ngIf="items.length > 0" class="text-muted animated fadeIn">Resultados: {{items.length}}</small>
+
+                                <div *ngIf="items.length > 0" class="list-group list-group-flush shadow" style="min-width: 80%; max-height:400px; overflow-y: scroll; position: absolute;">
+
+                                    <ng-container *ngFor="let product of items ">
+                                        <button [disabled]="!product.status || product.inventory <= 0" type="button " class="list-group-item list-group-item-action pointer animated fadeIn fast" (click)="selectItem(product) " data-dismiss="modal ">
+                                                <div class="d-flex w-100 justify-content-between ">
+                                                    <div>
+                                                        <h5 class="mb-1 text-break fw-bolder ">{{ product.sku }}</h5>
+                                                        <small class="mb-1 text-break fw-bolder text-muted">{{ product.name }}</small>
+                                                    </div>
+                                                    <small> 
+                                                        <span *ngIf="product.status " class="label label-success "> Activo </span>
+                                                        <span *ngIf="!product.status " class="label label-danger "> Desactivado </span>
+                                                    </small>
+                                                </div>                                                                                    
+                                            </button>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+
+                            <form class="form-horizontal form-material" [formGroup]="addItemForm" (ngSubmit)="addItem()">
+
+                                <div class="form-group">
+
+                                    <label for="" class="form-label">SKU o Codigo</label>
+                                    <input readonly formControlName="sku" type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" />
+                                    <small id="helpId" *ngIf="validateFormItems('sku')" class="form-text text-danger">Campo obligatorio</small>
+
+
+                                </div>
+                                <div class="form-group">
+
+
+                                    <label for="" class="form-label">Item</label>
+                                    <input readonly formControlName="description" type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" />
+                                    <small id="helpId" *ngIf="validateFormItems('description')" class="form-text text-danger">Campo obligatorio</small>
+
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="" class="form-label">Cantidad</label>
+                                    <input formControlName="qty" min="1" type="number" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" />
+                                    <small id="helpId" *ngIf="validateFormItems('qty')" class="form-text text-danger">Campo obligatorio</small>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100">
+                                    Agregar
+                                </button>
+
+                            </form>
+
+                        </div>
                     </div>
                 </div>
+
+                <div class="table-responsive m-t-20" *ngIf="corrective">
+                    <table class="table vm no-th-brd pro-of-month">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Item</th>
+                                <th>Cantidad</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngIf="corrective.items?.length === 0">
+                                <td colspan="4" class="text-center"> No se han agregado items en este mantenimiento... </td>
+                            </tr>
+
+                            <tr *ngFor="let item of corrective.items; let i = index">
+                                <td> {{ i + 1 }} </td>
+                                <td> {{ item.description }} </td>
+                                <td> {{ item.quantity }} </td>
+                                <td> {{ item.date | date: 'short' }} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
-        </form>
-        <!-- ENVIAR COMENTARIO -->
+        </div>
 
     </div>
-    <!-- INFORMACION DEL MANTENIMIENTO -->
+
 </div>
+
+
 
 <!-- ===============================================================================
     CHECK LIST

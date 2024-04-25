@@ -87,6 +87,13 @@ export class PreventivesService {
   }
 
   /** ================================================================
+   *   UPDATE ITEMS PREVENTIVES
+  ==================================================================== */
+  updateItemsPreventives( formData: any, id:string ){
+    return this.http.put<{ok: boolean, preventive: Preventive}>(`${base_url}/preventives/items/${id}`, formData, this.headers);
+  }
+
+  /** ================================================================
    *   DELETE PREVENTIVES
   ==================================================================== */
   deletePreventive( id:string ){

@@ -14,6 +14,8 @@ import { Corrective } from '../../models/correctives.model';
 import { CorrectivesService } from '../../services/correctives.service';
 import { FileUploadService } from '../../services/file-upload.service';
 import { UsersService } from '../../services/users.service';
+import { Inventory } from 'src/app/models/inventory.model';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-correctivo',
@@ -29,6 +31,7 @@ export class CorrectivoComponent implements OnInit {
                 private correctivesService: CorrectivesService,
                 private fb: FormBuilder,
                 private fileUploadService: FileUploadService,
+                private searchService: SearchService,
                 private usersService: UsersService) { 
 
                   this.user = this.usersService.user;
@@ -486,6 +489,101 @@ export class CorrectivoComponent implements OnInit {
       }
     });
     
+
+  }
+
+  /** ===================================================================
+   * SEARCH ITEMS
+  ======================================================================= */
+  public items: Inventory[] = [];
+  searchItems(termino: string){
+
+    let query = `desde=${0}&hasta=${50}`;
+
+    if (termino.length === 0) {
+      this.items = []
+      return;
+    }
+    
+    this.searchService.search('inventory', termino, query)
+        .subscribe( ({resultados}) => {
+          this.items = resultados;
+        });   
+
+  }
+
+  /** ===================================================================
+   * SELECT ITEM
+  ======================================================================= */
+  @ViewChild('searchII') searchII!: ElementRef;
+  selectItem(item: Inventory){
+
+    this.addItemForm.setValue({
+      qty: this.addItemForm.value.qty,
+      sku: item.sku,
+      type: 'Salida',
+      description: item.name,
+    })
+
+    this.items = [];
+    this.searchII.nativeElement.value = '';
+
+  }
+
+
+  /** ===================================================================
+   * ADD ITEMS
+  ======================================================================= */
+  @ViewChild('btnAI') btnAI!: ElementRef;
+  public addItemSubmitted: boolean = false;
+  public addItemForm = this.fb.group({
+    qty: ['', [Validators.required, Validators.min(1)]],
+    sku: ['', [Validators.required]],
+    type: ['Salida', [Validators.required]],
+    description: ['', [Validators.required]],
+  })
+
+  addItem(){
+
+    this.addItemSubmitted = true;
+
+    if (this.addItemForm.invalid) {
+      return;
+    }
+
+    if (this.addItemForm.value.qty <= 0) {
+      Swal.fire('Atención', 'Debes de agregar una cantidad validad', 'warning');
+      return;
+    }
+
+    this.correctivesService.updateItemsCorrective(this.addItemForm.value, this.corrective.coid!)
+        .subscribe( ({corrective}) => {
+
+          this.corrective.items = corrective.items;
+          Swal.fire('Estupendo', 'Se agrego el item exitosamente', 'success');
+
+          this.addItemSubmitted = false;
+          this.addItemForm.reset({
+            type: 'Salida'
+          });
+
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error', err.error.msg, 'error');          
+        })
+
+  }
+
+  /** ===================================================================
+   * VALIDATE ADD ITEMS
+  ======================================================================= */
+  validateFormItems(campo:string): boolean{
+
+    if (this.addItemSubmitted && this.addItemForm.get(campo)?.invalid) {
+      return true;
+    }else{
+      return false;
+    }
 
   }
 

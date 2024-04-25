@@ -65,10 +65,16 @@
                                     {{product.name}}
                                 </td>
                                 <td>
-                                    <span *ngIf="!product.invoice">
+                                    <span *ngIf="!product.invoice && !product.preventive && !product.corrective">
                                         {{product.description}}
                                     </span>
                                     <a *ngIf="product.invoice" [routerLink]="['/dashboard/factura', product.invoice]">
+                                        {{product.description}}
+                                    </a>
+                                    <a *ngIf="product.preventive" [routerLink]="['/dashboard/preventivo', product.preventive]">
+                                        {{product.description}}
+                                    </a>
+                                    <a *ngIf="product.corrective" [routerLink]="['/dashboard/correctivo', product.corrective]">
                                         {{product.description}}
                                     </a>
                                 </td>

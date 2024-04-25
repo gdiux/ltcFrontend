@@ -11,6 +11,8 @@ export class LogProduct{
         public qty: number,
         public stock: number,
         public invoice: string,
+        public preventive: string,
+        public corrective: string,
         public cajero: User,
         public categoria: string,
         public subcategoria: string,

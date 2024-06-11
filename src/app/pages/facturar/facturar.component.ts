@@ -78,6 +78,59 @@ export class FacturarComponent implements OnInit {
 
   }
 
+  /** ===================================================================
+   * SEARCH ITEMS
+  ======================================================================= */
+  @ViewChild ('searchII') searchII!: ElementRef;
+  public itemsList: Inventory[] = [];
+  searchItems(termino: string){
+
+    let query = `desde=${0}&hasta=${50}`;
+
+    if (termino.length === 0) {
+      this.itemsList = []
+      return;
+    }
+    
+    this.searchService.search('inventory', termino, query)
+        .subscribe( ({resultados}) => {
+          
+          this.itemsList = resultados;
+        });   
+
+  }
+
+  /** ================================================================
+   *   DELETE ITEM
+  ==================================================================== */
+  deleteItem(i: any){
+
+    this.items.splice(i, 1);
+    this.sumarTotales();
+
+  }
+
+  /** ================================================================
+   *   AGREGAR O QUITAR CANTIDADES DE ITEM
+  ==================================================================== */
+  addQuantity(sku: string, qty: number){
+
+    this.items.map( (it) => {
+
+      if (it.sku === sku) {
+        it.quantity += qty;
+
+        if (it.quantity <= 0) {
+          it.quantity = 1;
+        }        
+      }
+
+    })
+
+    this.sumarTotales();
+
+  }
+
   /** ================================================================
    *   AGREGAR AL CARRITO DE COMPRAS
   ==================================================================== */
@@ -108,6 +161,9 @@ export class FacturarComponent implements OnInit {
         }
       })
     }
+
+    this.itemsList = [];
+    this.searchII.nativeElement.value = '';
 
     // SUMAR TOTALES
     this.sumarTotales();

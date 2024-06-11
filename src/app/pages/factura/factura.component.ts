@@ -32,7 +32,7 @@ export class FacturaComponent implements OnInit {
   ==================================================================== */
   @ViewChild('PrintTemplate') PrintTemplateTpl!: TemplateRef<any>;
   printTemplate() {
-    this.printerService.printDiv('PrintTemplateTpl');
+    this.printerService.printDiv('printDiv2');
   }
 
   /** ================================================================

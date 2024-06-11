@@ -50,7 +50,29 @@
 
             <div class="w-100">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Buscar producto con codigo de barra" (keyup.enter)="searchCode(search.value)" #search>
+                    <!-- <input type="text" class="form-control" placeholder="Buscar producto con codigo de barra" (keyup.enter)="searchCode(search.value)" #search> -->
+                    <input type="text" (keyup)="searchItems(searchII.value)" class="form-control" placeholder="Buscar Item" #searchII>
+                    <small *ngIf="itemsList.length > 0" class="text-muted animated fadeIn">Resultados: {{itemsList.length}}</small>
+
+                    <div *ngIf="itemsList.length > 0" class="list-group list-group-flush shadow" style="min-width: 80%; max-height:400px; overflow-y: scroll; position: absolute;">
+
+                        <ng-container *ngFor="let product of itemsList ">
+                            <button [disabled]="!product.status || product.inventory <= 0" type="button " class="list-group-item list-group-item-action pointer animated fadeIn fast" (click)="addItem(product, 1, product.price) " data-dismiss="modal ">
+                                                <div class="d-flex w-100 justify-content-between ">
+                                                    <div>
+                                                        <h5 class="mb-1 text-break fw-bolder ">{{ product.sku }}</h5>
+                                                        <small class="mb-1 text-break fw-bolder text-muted">{{ product.name }}</small>
+                                                    </div>
+                                                    <small> 
+                                                        <span *ngIf="product.status && product.inventory > 0 " class="label label-success "> Activo </span>
+                                                        <span *ngIf="product.inventory <= 0" class="label label-danger "> Agotado </span>
+                                                        <span *ngIf="!product.status" class="label label-danger "> Desactivado </span>
+                                                    </small>
+                                                </div>                                                                                    
+                                            </button>
+                        </ng-container>
+
+                    </div>
                 </div>
             </div>
 
@@ -76,11 +98,24 @@
                         </tr>
                         <tr *ngFor="let item of items; let i = index">
                             <td>
-                                <i class="text-danger ti-trash"></i>
+                                <button (click)="deleteItem(i)" type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn">
+                                    <i class="text-danger ti-trash"></i>
+                                </button>
                             </td>
                             <td class="text-center">{{i+1}}</td>
                             <td> {{ item.description }} </td>
-                            <td class="text-right"> {{ item.quantity }} </td>
+                            <td class="text-right">
+                                <div class="form-group">
+                                    <div class="input-group bootstrap-touchspin">
+                                        <input readonly class="vertical-spin form-control" type="text" data-bts-button-down-class="btn btn-secondary btn-outline" data-bts-button-up-class="btn btn-secondary btn-outline" [value]="item.quantity" name="vertical-spin" style="display: block;">
+                                        <span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span>
+                                        <span class="input-group-btn-vertical">
+                                            <button (click)="addQuantity(item.sku, 1)" class="btn btn-secondary btn-sm btn-outline bootstrap-touchspin-up" type="button"><i class="ti-plus"></i></button>
+                                            <button (click)="addQuantity(item.sku, -1)" class="btn btn-secondary btn-sm btn-outline bootstrap-touchspin-down" type="button"><i class="ti-minus"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
                             <td class="text-right"> {{ item.price | currency : 'COP' : 'symbol' : '1.0-0' }} </td>
                             <td class="text-right"> {{ item.quantity * item.price | currency : 'COP' : 'symbol' : '1.0-0' }}</td>
                         </tr>
